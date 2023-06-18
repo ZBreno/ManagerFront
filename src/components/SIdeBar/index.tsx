@@ -49,7 +49,7 @@ export default function SideBar({ options }: SideBarProps) {
               />
             ))}
           </div>
-          <div className="ml-5 mr-5 mb-5 flex items-center cursor-pointer">
+          <div className="ml-5 mr-5 mb-10 flex items-center cursor-pointer">
          
             <Logout className="text-danger-600" />
             <Typography className="text-danger-600 ml-10 text-2xl">Sair</Typography>

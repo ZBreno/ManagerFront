@@ -3,6 +3,7 @@ import { Typography } from "@mui/material";
 import { Circle, Add } from "@mui/icons-material";
 import SelectField from "../Select";
 import ButtonForm from "../Button";
+import Search from "../Search/inde";
 interface Option {
   text: string;
   value: number;
@@ -27,7 +28,9 @@ export default function Header({ options, title, subtitle }: HeaderProps) {
             </Typography>
             <Circle className="text-text-600" sx={{ width: 8, height: 8 }} />
             {options ? (
-              <SelectField options={options} />
+              <div >
+                <SelectField options={options} />
+              </div>
             ) : (
               <Typography className="ml-3 text-text-600 text-xl">
                 Visão geral
@@ -39,15 +42,17 @@ export default function Header({ options, title, subtitle }: HeaderProps) {
           <div>
             <ButtonForm
               text={`Criar ${subtitle.toLowerCase()}`}
-              onClick={() => alert('em breve')}
+              onClick={() => alert("em breve")}
               startIcon={<Add />}
-              style={{ textTransform: 'full-width' }}
+              style={{ textTransform: "capitalize" }}
               className="bg-primary-500 text-white hover:bg-primary-500"
             />
-            
           </div>
         )}
       </div>
+      <form>
+        <Search placeholder={title.toLowerCase()}/>
+      </form>
     </div>
   );
 }
