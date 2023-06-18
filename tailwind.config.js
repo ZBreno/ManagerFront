@@ -22,6 +22,7 @@ module.exports = {
       colors: {
         text: {
           500: "#42464D",
+          600: "#002C66"
         },
         primary: {
           500: "#157AFE",
@@ -76,7 +77,7 @@ module.exports = {
         },
       },
       fontFamily: {
-        sans: ["Poppins", "Roboto", "sans-serif"],
+        poppins: ["poppins", "sans-serif"],
       },
       screens: {
         sm: "640px",
