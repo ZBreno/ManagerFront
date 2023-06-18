@@ -12,10 +12,11 @@ interface Option {
 
 interface SideBarProps {
   options: Option[];
+  currentPage: number;
+  onPress: (value: number) => void;
 }
 
-export default function SideBar({ options }: SideBarProps) {
-  const [currentPage, setCurrentPage] = useState<number>(0);
+export default function SideBar({ options, onPress, currentPage }: SideBarProps) {
 
   return (
     <nav className="bg-white flex items-start justify-center h-screen border-text-500 border-r border-opacity-20 ">
@@ -42,7 +43,7 @@ export default function SideBar({ options }: SideBarProps) {
             {options.map(({ name, icon }, index) => (
               <ItemBar
                 key={name}
-                onClick={() => setCurrentPage(index)}
+                onClick={() => onPress(index)}
                 text={name}
                 icon={icon}
                 isSelected={currentPage === index}

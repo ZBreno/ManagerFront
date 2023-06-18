@@ -163,11 +163,6 @@
   resolved "https://registry.npmjs.org/@emotion/weak-memoize/-/weak-memoize-0.3.1.tgz"
   integrity sha512-EsBwpc7hBUJWAsNPBmJy4hxWx12v6bshQsldrVmjxJoc3isbxhOrF2IcCpaXxfvq03NwkI7sbsOLXbYuqF/8Ww==
 
-"@fontsource/poppins@^5.0.3":
-  version "5.0.3"
-  resolved "https://registry.npmjs.org/@fontsource/poppins/-/poppins-5.0.3.tgz"
-  integrity sha512-5lL2vmvmh4zbknTh1nVH9pTWyhYqAlYMHIAnkNhqo5qwMZGlr+coM1dtMwiQHRBgmHAl3ZvJ35Bj0s8cpmXZbg==
-
 "@jridgewell/gen-mapping@^0.3.2":
   version "0.3.3"
   resolved "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.3.tgz"

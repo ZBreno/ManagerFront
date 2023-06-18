@@ -35,7 +35,7 @@ export const AppThemeProvider = ({ children }: AppThemeProviderProps) => {
 
   return (
     <ThemeContext.Provider value={{ themeName, toogleTheme }}>
-      <Box height={"100vh"} bgcolor={theme.palette.background.default}>
+      <Box height={"100vh"} bgcolor={theme.palette.background.paper}>
         <ThemeProvider theme={theme}>{children}</ThemeProvider>
       </Box>
     </ThemeContext.Provider>
