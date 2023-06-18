@@ -3,6 +3,9 @@ import { yellow } from "@mui/material/colors";
 import { PaletteColorOptions } from "@mui/material/styles";
 
 export const DarkTheme = createTheme({
+  typography: {
+    fontFamily: 'poppins',
+  },
   palette: {
     primary: {
       main: "rgba(21, 122, 254, 1)",

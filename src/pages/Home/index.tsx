@@ -10,6 +10,7 @@ import {
   AnnouncementOutlined,
   Apartment,
 } from "@mui/icons-material";
+import Header from "@/components/Header";
 export default function Home() {
 
   
@@ -36,10 +37,17 @@ export default function Home() {
       icon: <Apartment/>,
     },
   ];
-
+  const options2 = [
+    { text: "Justificativa de falta", value: 0 },
+    { text: "Atestado", value: 1},
+    { text: "Aviso", value: 2 },
+    { text: "Demissão", value: 3 },
+    { text: "Promoção", value: 4 },
+    { text: "Outro", value: 5 },
+  ];
   const { toogleTheme } = useAppThemeContext();
   return (
-    <main>
+    <main className="bg-white">
       <Grid container>
         <Grid item xs={3}>
           <SideBar options={options}/>
@@ -47,6 +55,7 @@ export default function Home() {
         <Grid item xs={9}>
         
         
+         <Header title="Mensagens" subtitle="Mensagem" options={options2}/>
          
         </Grid>
       </Grid>

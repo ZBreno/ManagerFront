@@ -1,6 +1,9 @@
 import { createTheme } from "@mui/material";
 
 export const LightTheme = createTheme({
+  typography: {
+    fontFamily: 'poppins',
+  },
   palette: {
     primary: {
       main: "#157AFE",

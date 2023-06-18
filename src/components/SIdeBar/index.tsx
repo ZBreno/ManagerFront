@@ -18,8 +18,8 @@ export default function SideBar({ options }: SideBarProps) {
   const [currentPage, setCurrentPage] = useState<number>(0);
 
   return (
-    <nav className="bg-white flex items-start justify-center h-screen border-text-500 border-r border-opacity-20">
-      <div className="flex flex-col h-full">
+    <nav className="bg-white flex items-start justify-center h-screen border-text-500 border-r border-opacity-20 ">
+      <div className="flex flex-col h-full fixed">
         <div className="flex flex-row mt-10 mb-10 ml-5 mr-5">
           <Avatar
             alt="Remy Sharp"
