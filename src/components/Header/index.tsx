@@ -28,7 +28,7 @@ export default function Header({ options, title, subtitle }: HeaderProps) {
             </Typography>
             <Circle className="text-text-600" sx={{ width: 8, height: 8 }} />
             {options ? (
-              <div >
+              <div>
                 <SelectField options={options} />
               </div>
             ) : (
@@ -44,15 +44,17 @@ export default function Header({ options, title, subtitle }: HeaderProps) {
               text={`Criar ${subtitle.toLowerCase()}`}
               onClick={() => alert("em breve")}
               startIcon={<Add />}
-              style={{ textTransform: "capitalize" }}
-              className="bg-primary-500 text-white hover:bg-primary-500"
+              style={{ textTransform: "none" }}
+              className="bg-primary-500 text-white hover:bg-primary-500 px-6 py-2 rounded-sm text-xl"
             />
           </div>
         )}
       </div>
-      <form>
-        <Search placeholder={title.toLowerCase()}/>
-      </form>
+      {subtitle != "Dashboard" && (
+        <form>
+          <Search placeholder={title.toLowerCase()} />
+        </form>
+      )}
     </div>
   );
 }

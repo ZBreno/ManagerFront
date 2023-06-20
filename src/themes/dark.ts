@@ -1,6 +1,4 @@
 import { createTheme } from "@mui/material";
-import { yellow } from "@mui/material/colors";
-import { PaletteColorOptions } from "@mui/material/styles";
 
 export const DarkTheme = createTheme({
   typography: {
