@@ -12,11 +12,11 @@ import {
 } from "@mui/icons-material";
 
 import Header from "@/components/Header";
-import Messages from "@/components/Message";
-import Dashboard from "@/components/Dashboard";
-import Employee from "@/components/Employeer";
-import Annoucement from "@/components/Annoucement";
-import Department from "@/components/Department";
+import Messages from "@/components/ItemBarContent/Message";
+import Dashboard from "@/components/ItemBarContent/Dashboard";
+import Employee from "@/components/ItemBarContent/Employeer";
+import Annoucement from "@/components/ItemBarContent/Annoucement";
+import Department from "@/components/ItemBarContent/Department";
 import { useState } from "react";
 export default function Home() {
   const [currentPage, setCurrentPage] = useState<number>(0);

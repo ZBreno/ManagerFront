@@ -1,7 +1,7 @@
 import { MailOutline, MoreVert } from "@mui/icons-material";
 import { Typography } from "@mui/material";
-import ButtonForm from "../Button";
-import Header from "../Header";
+import ButtonForm from "../../Button";
+import Header from "../../Header";
 
 interface Message {
   title: string;
@@ -57,15 +57,15 @@ export default function Messages({ messages }: MessageProps) {
   ];
 
   return (
-    <div>
+    <div className="px-10 mt-10">
       <Header title="Mensagens" subtitle="Mensagem" options={options} />
-      <div className="flex justify-start mx-10 flex-wrap mt-10 gap-x-10 gap-y-6">
+      <div className="flex justify-start  flex-wrap mt-10 gap-x-10 gap-y-6">
         {messages.map(
           ({ title, remetente, department, type }, indexMessage) => {
             const index: any = typeMessages.findIndex(
               (item, index) => item.name === type
             );
-            console.log(typeMessages[index].bgBtn);
+            
             const bg = String(typeMessages[index].bg);
             const bgBtn = String(typeMessages[index].bgBtn);
             return (

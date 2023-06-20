@@ -1,4 +1,4 @@
-import Header from "../Header";
+import Header from "../../Header";
 
 export default function Employee() {
   const options = [
@@ -7,7 +7,7 @@ export default function Employee() {
     { text: "Administrativo", value: 2 },
   ];
   return (
-    <div>
+    <div className="px-10 mt-10">
       <Header title="Funcionários" subtitle="Funcionários" options={options} />
     </div>
   );

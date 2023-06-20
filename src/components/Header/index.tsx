@@ -16,7 +16,7 @@ interface HeaderProps {
 }
 export default function Header({ options, title, subtitle }: HeaderProps) {
   return (
-    <div className="px-10 mt-10">
+    <div>
       <div className="flex justify-between  items-center">
         <div className="flex flex-col">
           <Typography className="text-primary-500 text-3xl font-bold">
