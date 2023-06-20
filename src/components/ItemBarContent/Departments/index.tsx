@@ -9,7 +9,7 @@ import {
 import { useState } from "react";
 import Accordions from "../../Accordion";
 
-export default function Department() {
+export default function Departments() {
   const [expanded, setExpanded] = useState<string | false>(false);
 
   const handleChange =

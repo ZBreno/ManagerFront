@@ -45,7 +45,7 @@ export default function Header({ options, title, subtitle }: HeaderProps) {
               onClick={() => alert("em breve")}
               startIcon={<Add />}
               style={{ textTransform: "none" }}
-              className="bg-primary-500 text-white hover:bg-primary-500 px-6 py-2 rounded-sm text-xl"
+              className="bg-primary-500 text-white hover:bg-primary-500 px-6 py-2  font-medium rounded-sm text-xl"
             />
           </div>
         )}

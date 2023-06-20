@@ -12,11 +12,11 @@ import {
 } from "@mui/icons-material";
 
 import Header from "@/components/Header";
-import Messages from "@/components/ItemBarContent/Message";
+import Messages from "@/components/ItemBarContent/Messages";
 import Dashboard from "@/components/ItemBarContent/Dashboard";
-import Employee from "@/components/ItemBarContent/Employeer";
-import Annoucement from "@/components/ItemBarContent/Annoucement";
-import Department from "@/components/ItemBarContent/Department";
+import Employees from "@/components/ItemBarContent/Employees";
+import Annoucement from "@/components/ItemBarContent/Annoucements";
+import Department from "@/components/ItemBarContent/Departments";
 import { useState } from "react";
 export default function Home() {
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -80,10 +80,10 @@ export default function Home() {
       icon: <Apartment />,
     },
   ];
-  
+
   const pages = [
     { value: 0, component: <Dashboard /> },
-    { value: 1, component: <Employee /> },
+    { value: 1, component: <Employees /> },
     { value: 2, component: <Messages messages={messages} /> },
     { value: 3, component: <Annoucement /> },
     { value: 4, component: <Department /> },
@@ -95,7 +95,10 @@ export default function Home() {
   const { toogleTheme } = useAppThemeContext();
   return (
     <main>
-      <Grid className={`${pages[currentComponent].value == 0 && 'bg-bg-screen'}`} container>
+      <Grid
+        className={`${pages[currentComponent].value == 0 && "bg-bg-screen"}`}
+        container
+      >
         <Grid item xs={3}>
           <SideBar
             options={options}
@@ -104,7 +107,6 @@ export default function Home() {
           />
         </Grid>
         <Grid item xs={9}>
-          
           {pages[currentComponent].component}
         </Grid>
       </Grid>
