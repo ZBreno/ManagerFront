@@ -1,6 +1,3 @@
-import { MailOutline, MoreVert } from "@mui/icons-material";
-import { Typography } from "@mui/material";
-import ButtonForm from "../../Button";
 import Header from "../../Header";
 import Message from "@/components/Message";
 

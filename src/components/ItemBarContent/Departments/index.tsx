@@ -1,26 +1,8 @@
-import { ExpandMore } from "@mui/icons-material";
 import Header from "../../Header";
-import {
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Typography,
-} from "@mui/material";
-import { useState } from "react";
 import Accordions from "../../Accordion";
 
 export default function Departments() {
-  const [expanded, setExpanded] = useState<string | false>(false);
-
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false);
-    };
-  const options = [
-    { text: "Rercusos Humanos", value: 0 },
-    { text: "Almoxarifado", value: 1 },
-    { text: "Administrativo", value: 2 },
-  ];
+  
   const departments = [
     {
       name: "Administrativo",

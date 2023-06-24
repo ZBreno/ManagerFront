@@ -1,6 +1,4 @@
 import { KeyboardArrowDown } from "@mui/icons-material";
-import { useState } from "react";
-
 interface Option {
   text: string;
   value: number;

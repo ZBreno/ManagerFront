@@ -1,5 +1,5 @@
 import { Search } from "@mui/icons-material";
-import { Input, TextField, Typography } from "@mui/material";
+import { TextField, Typography } from "@mui/material";
 
 interface SearchProps {
   label?: string;

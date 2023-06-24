@@ -1,6 +1,5 @@
 import { Avatar, Rating, Typography } from "@mui/material";
 import Image from "next/image";
-import { useState } from "react";
 import ButtonForm from "../Button";
 import Tag from "../Tag";
 

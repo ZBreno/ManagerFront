@@ -1,11 +1,9 @@
 "use client";
 import Header from "../../Header";
 import React, { useState, useEffect } from "react";
-import CircularProgress, {
-  CircularProgressProps,
-} from "@mui/material/CircularProgress";
+import CircularProgress from "@mui/material/CircularProgress";
 import Typography from "@mui/material/Typography";
-import Box from "@mui/material/Box";
+
 import ButtonForm from "@/components/Button";
 import HeaderTable from "@/components/HeaderTable";
 import style from "./style.module.css";
@@ -15,9 +13,6 @@ import {
   Line,
   XAxis,
   YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
   ResponsiveContainer,
 } from "recharts";
 
@@ -92,7 +87,7 @@ export default function Dashboard() {
   }, []);
   const columns = ["Nome", "Setor", "Status", "Horário"];
   return (
-    <div className="px-10 pt-10 flex flex-col w-10/12 fixed overflow-hidden  h-full">
+    <div className="px-10 pt-10 flex flex-col w-10/12 fixed xl:overflow-hidden 2xl:overflow-hidden h-full">
       <div>
         <Header title="Dashboard" subtitle="Dashboard" />
       </div>

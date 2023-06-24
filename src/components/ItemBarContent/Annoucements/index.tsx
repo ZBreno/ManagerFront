@@ -1,6 +1,5 @@
 import Annoucement from "@/components/Annoucement";
 import Header from "../../Header";
-import { comma } from "postcss/lib/list";
 
 export default function Annoucements() {
   const annoucements = [

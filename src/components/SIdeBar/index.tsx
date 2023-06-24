@@ -3,7 +3,6 @@ import Avatar from "@mui/material/Avatar";
 import { Typography } from "@mui/material";
 import ItemBar from "../ItemBar";
 import { Logout } from "@mui/icons-material";
-import { useState } from "react";
 
 interface Option {
   name: string;

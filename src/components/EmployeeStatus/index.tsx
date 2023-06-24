@@ -1,7 +1,6 @@
 import { Grid, Typography } from "@mui/material";
-import ButtonForm from "../Button";
 import Image from "next/image";
-import { InfoOutlined } from "@mui/icons-material";
+
 
 interface EmployeeStatusProps {
   image: string;
@@ -18,7 +17,7 @@ export default function EmployeeStatus({
   checkin,
   bg,
 }: EmployeeStatusProps) {
-  console.log(bg);
+  
   return (
     <Grid container className={`py-4 px-4 items-center ${bg && "bg-white"}`}>
       <Grid item xs={3}>
