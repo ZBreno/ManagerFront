@@ -1,0 +1,16 @@
+.container {
+    overflow-y: scroll; /* Adiciona a barra de rolagem vertical */
+  }
+
+.container::-webkit-scrollbar {
+  width: 0em; /* Largura da barra de rolagem */
+  height: 0em; /* Altura da barra de rolagem */
+}
+
+.container::-webkit-scrollbar-track {
+  background-color: transparent; /* Cor do fundo da barra de rolagem */
+}
+
+.container::-webkit-scrollbar-thumb {
+  background-color: transparent; /* Cor do "polegar" da barra de rolagem */
+}

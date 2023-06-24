@@ -7,6 +7,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+
       backgroundImage: {
         "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
         "gradient-conic":
@@ -88,6 +89,13 @@ module.exports = {
         lg: "1024px",
         xl: "1280px",
         "2xl": "1536px",
+      },
+      fontSize: {
+        xxs: "8px"
+      },
+      gridTemplateColumns: {
+        sidebar: "300px auto", //for sidebar layout
+        "sidebar-collapsed": "64px auto", //for collapsed sidebar layout
       },
       borderRadius: {
         sm: "8px",

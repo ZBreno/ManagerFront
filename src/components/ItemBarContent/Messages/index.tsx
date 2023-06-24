@@ -28,7 +28,7 @@ export default function Messages({ messages }: MessageProps) {
   return (
     <div className="px-10 mt-10">
       <Header title="Mensagens" subtitle="Mensagem" options={options} />
-      <div className="flex justify-start  flex-wrap mt-10 gap-x-10 gap-y-6">
+      <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2  gap-4 mt-10">
         {messages.map(({ title, sender, department, type }, index) => (
           <Message key={index} title={title} department={department} sender={sender} type={type} />
         ))}

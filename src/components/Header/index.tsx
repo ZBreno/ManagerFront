@@ -3,7 +3,7 @@ import { Typography } from "@mui/material";
 import { Circle, Add } from "@mui/icons-material";
 import SelectField from "../Select";
 import ButtonForm from "../Button";
-import Search from "../Search/inde";
+import Search from "../Search";
 interface Option {
   text: string;
   value: number;

@@ -49,7 +49,7 @@ export default function Message({
   ];
 
   const index = (): number => {
-    const index = typeMessages.findIndex((item, index) => item.name === type);
+    const index = typeMessages.findIndex((item) => item.name === type);
 
     return index;
   };
@@ -58,26 +58,25 @@ export default function Message({
   const bgBtn = String(typeMessages[index()].bgBtn);
 
   return (
-    <div
-      className={`${bg} px-3 py-4 rounded-lg flex flex-col min-w-[300px] gap-6`}
-    >
-      <div className="flex justify-between">
-        <div>
+    <div className={`${bg} px-3 py-4 rounded-lg`}>
+      <div className=" grid gap-6">
+        <div className="flex justify-between">
           <MailOutline />
+
+          <MoreVert />
         </div>
 
-        <MoreVert />
-      </div>
-      <div>
-        <Typography className={`font-semibold text-xs`}>{sender}</Typography>
-        <Typography className="font-bold text-2xl">{department}</Typography>
-      </div>
-      <div className={`flex justify-end`}>
-        <ButtonForm
-          className={`px-4 text-white rounded-sm py-1`}
-          style={{ textTransform: "none", backgroundColor: bgBtn }}
-          text="Ler mais"
-        />
+        <div>
+          <Typography className={`font-semibold text-xs`}>{sender}</Typography>
+          <Typography className="font-bold text-xl">{department}</Typography>
+        </div>
+        <div className={`flex justify-end`}>
+          <ButtonForm
+            className={`px-4 text-white rounded-sm py-1`}
+            style={{ textTransform: "none", backgroundColor: bgBtn }}
+            text="Ler mais"
+          />
+        </div>
       </div>
     </div>
   );

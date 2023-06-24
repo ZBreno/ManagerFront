@@ -2,7 +2,16 @@ import { createTheme } from "@mui/material";
 
 export const DarkTheme = createTheme({
   typography: {
-    fontFamily: 'poppins',
+    fontFamily: "poppins",
+  },
+  components: {
+    MuiInput: {
+      styleOverrides: {
+        root: {
+          border: "2px solid #981"
+        },
+      },
+    },
   },
   palette: {
     primary: {

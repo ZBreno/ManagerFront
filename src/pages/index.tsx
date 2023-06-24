@@ -23,37 +23,37 @@ export default function Home() {
   const messages = [
     {
       title: "string",
-      remetente: "Foi eu",
+      sender: "Foi eu",
       department: "Ninguem sabe",
       type: "ATESTADO",
     },
     {
       title: "string",
-      remetente: "Foi eu",
+      sender: "Foi eu",
       department: "Ninguem sabe",
       type: "AVISO",
     },
     {
       title: "string",
-      remetente: "Foi eu",
+      sender: "Foi eu",
       department: "Ninguem sabe",
       type: "JUSTIFICATIVA_DE_FALTA",
     },
     {
       title: "string",
-      remetente: "Foi eu",
+      sender: "Foi eu",
       department: "Ninguem sabe",
       type: "DEMISSAO",
     },
     {
       title: "string",
-      remetente: "Foi eu",
+      sender: "Foi eu",
       department: "Ninguem sabe",
       type: "PROMOCAO",
     },
     {
       title: "string",
-      remetente: "Foi eu",
+      sender: "Foi eu",
       department: "Ninguem sabe",
       type: "OUTRO",
     },
@@ -96,17 +96,18 @@ export default function Home() {
   return (
     <main>
       <Grid
-        className={`${pages[currentComponent].value == 0 && "bg-bg-screen"}`}
+        className={`${pages[currentComponent].value == 0 && "bg-gray-200"}`}
         container
+        
       >
-        <Grid item xs={3}>
+        <Grid item xs={2} >
           <SideBar
             options={options}
             currentPage={currentPage}
             onPress={setCurrentPage}
           />
         </Grid>
-        <Grid item xs={9}>
+        <Grid item xs={10}>
           {pages[currentComponent].component}
         </Grid>
       </Grid>
