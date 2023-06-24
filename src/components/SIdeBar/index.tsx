@@ -22,9 +22,9 @@ export default function SideBar({
   currentPage,
 }: SideBarProps) {
   return (
-    <div className="border-text-500 border-r border-opacity-20 h-full">
+    <div className={`${ currentPage != 0 && "border-text-500 border-r border-opacity-20"} h-full `}>
       <nav className=" bg-white flex items-start justify-center h-screen  ">
-        <div className="flex flex-col h-screen fixed">
+        <div className="flex flex-col h-screen fixed ">
           <div className="flex flex-row mt-10 mb-10 ml-5 mr-5">
             <Avatar
               alt="Remy Sharp"
@@ -33,11 +33,11 @@ export default function SideBar({
             />
 
             <div className="flex flex-col justify-center ml-4">
-              <Typography color="neutral.main" className="font-bold text-2xl">
+              <Typography color="neutral.main" className="font-bold text-lg text-text-500">
                 Fernando Pessoa
               </Typography>
 
-              <Typography className="font-bold text-base text-gray-600">
+              <Typography className="font-regular text-sm text-gray-600">
                 Funcionário
               </Typography>
             </div>

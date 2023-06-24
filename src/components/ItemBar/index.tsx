@@ -24,7 +24,7 @@ export default function ItemBar({
       <div className={`${isSelected ? "text-primary-500" : "text-text-500"} `}>{icon}</div>
 
       <Typography
-        className={`ml-10 text-2xl  ${
+        className={`ml-10 text-base  ${
           isSelected ? "text-primary-500" : "text-text-500"
         }`}
       >
