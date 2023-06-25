@@ -3,6 +3,7 @@ import Avatar from "@mui/material/Avatar";
 import { Typography } from "@mui/material";
 import ItemBar from "../ItemBar";
 import { Logout } from "@mui/icons-material";
+import Link from "next/link";
 
 interface Option {
   name: string;
@@ -55,9 +56,9 @@ export default function SideBar({
             </div>
             <div className="ml-5 mr-5 mb-10 flex items-center cursor-pointer">
               <Logout className="text-danger-600" />
-              <Typography className="text-danger-600 ml-10 text-2xl">
+              <Link href={'/login'} className="text-danger-600 font-poppins ml-10 text-2xl">
                 Sair
-              </Typography>
+              </Link>
             </div>
           </div>
         </div>

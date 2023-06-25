@@ -1,9 +1,9 @@
 "use cliente";
 import { Typography } from "@mui/material";
-import { Circle, Add } from "@mui/icons-material";
+import { Circle, Add, Search } from "@mui/icons-material";
 import SelectField from "../Select";
 import ButtonForm from "../Button";
-import Search from "../Search";
+import InputField from "../Input";
 interface Option {
   text: string;
   value: number;
@@ -51,8 +51,19 @@ export default function Header({ options, title, subtitle }: HeaderProps) {
         )}
       </div>
       {subtitle != "Dashboard" && (
-        <form>
-          <Search placeholder={title.toLowerCase()} />
+        <form className="mt-10">
+          <InputField
+            variant="search"
+            placeholder={`Busque aqui suas ${title.toLowerCase()}`}
+            InputProps={{
+              endAdornment: (
+                <Search
+                  className="text-primary-500 "
+                  sx={{ width: 24, height: 24 }}
+                />
+              ),
+            }}
+          />
         </form>
       )}
     </div>

@@ -1,13 +1,14 @@
 import { Button, ButtonProps } from '@mui/material'
 
 interface ButtonFormProps extends ButtonProps {
-    text: string;
+    text?: string;
+    children?: React.ReactNode;
 }
 
-export default function ButtonForm({text, ...rest}: ButtonFormProps) {
+export default function ButtonForm({text, children, ...rest}: ButtonFormProps) {
     return (
       <>
-        <Button {...rest}>{text}</Button>
+        <Button {...rest}>{text}{children}</Button>
       </>
     );
   }
