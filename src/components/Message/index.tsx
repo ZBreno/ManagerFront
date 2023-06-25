@@ -1,6 +1,7 @@
-import { MailOutline, MoreVert } from "@mui/icons-material";
-import { Typography } from "@mui/material";
+import { MailOutline, MoreVert, Delete } from "@mui/icons-material";
+import { Menu, MenuItem, Typography } from "@mui/material";
 import ButtonForm from "../Button";
+import { useState } from "react";
 
 interface MessageProps {
   title: string;
@@ -57,13 +58,55 @@ export default function Message({
   const bg = String(typeMessages[index()].bg);
   const bgBtn = String(typeMessages[index()].bgBtn);
 
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
   return (
     <div className={`${bg} px-3 py-4 rounded-lg`}>
       <div className=" grid gap-6">
         <div className="flex justify-between">
           <MailOutline />
-
-          <MoreVert />
+          <div>
+            <ButtonForm
+              id="basic-button"
+              aria-controls={open ? "basic-menu" : undefined}
+              aria-haspopup="true"
+              aria-expanded={open ? "true" : undefined}
+              onClick={handleClick}
+              className={`text-${bg} hover:bg-opacity-0 hover:bg-white p-0 min-w-[24px] `}
+            >
+              <MoreVert />
+            </ButtonForm>
+            <Menu
+              id="basic-menu"
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleClose}
+              MenuListProps={{
+                "aria-labelledby": "basic-button",
+              }}
+              className="p-0"
+            >
+              <MenuItem
+                className=" hover:bg-white text-text-500 text-sm"
+                onClick={handleClose}
+              >
+                Ler mais
+              </MenuItem>
+              <MenuItem
+                className="text-danger-600 text-sm"
+                onClick={handleClose}
+              >
+                Excluir
+              </MenuItem>
+            </Menu>
+          </div>
         </div>
 
         <div>

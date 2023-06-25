@@ -5,6 +5,17 @@ export const LightTheme = createTheme({
     fontFamily: "poppins",
   },
   components: {
+    
+    MuiButton: {
+      styleOverrides: {
+        root: {
+          ".css-1bhsf57-MuiButtonBase-root-MuiButton-root": {
+            ":hover":{backgroundColor: '#157AFE'},
+          },
+        }
+       
+      }
+    },
     MuiTextField: {
       styleOverrides: {
         root: {
