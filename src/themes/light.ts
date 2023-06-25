@@ -5,20 +5,62 @@ export const LightTheme = createTheme({
     fontFamily: "poppins",
   },
   components: {
-    
-    MuiButton: {
-      styleOverrides: {
-        root: {
-          ".css-1bhsf57-MuiButtonBase-root-MuiButton-root": {
-            ":hover":{backgroundColor: '#157AFE'},
-          },
-        }
-       
-      }
-    },
     MuiTextField: {
       styleOverrides: {
         root: {
+          "&.primary": {
+            backgroundColor: "#F5F7F9",
+            borderRadius: "8px",
+            border: "none",
+            color: "#FFFFFF",
+            "& fieldset": {
+              border: "0px solid",
+              ":focus": {
+                border: ".5px solid #157AFE",
+              },
+            },
+            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+              color: "#FFFFFF", // Nova cor do texto
+            },
+            "& .MuiInputBase-input": {
+              color: "#42464D", // Nova cor do texto
+              fontWeight: "bold", //
+              marginLeft: "8px",
+            },
+            "& .MuiInputBase-input::placeholder": {
+              fontWeight: "500",
+            },
+          },
+          "&.error": {
+            backgroundColor: "#F5F7F9",
+            borderRadius: "8px",
+            border: "none",
+            color: "#FFFFFF",
+            "& .MuiOutlinedInput-notchedOutline": {
+              border: ".5px solid #DF473B",
+            },
+            "& fieldset": {
+              border: ".5px solid #DF473B",
+              "&:hover": {
+                border: ".5px solid #157AFE", // Nova cor da borda no hover
+              },
+              ":focus": {
+                border: ".5px solid #157AFE",
+              },
+            },
+            
+            "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
+              color: "#FFFFFF", // Nova cor do texto
+            },
+            "& .MuiInputBase-input": {
+              color: "#42464D", // Nova cor do texto
+              fontWeight: "bold",
+              marginLeft: "8px",
+            },
+            "& .MuiInputBase-input::placeholder": {
+              fontWeight: "500",
+            },
+          },
           // this is styles for the new variants
           "&.search": {
             "& fieldset": {
@@ -32,7 +74,7 @@ export const LightTheme = createTheme({
             ".css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
               paddingLeft: "24px",
               color: "#42464D",
-              "::placeholder": { color: "#42464D", opacity: "1"},
+              "::placeholder": { color: "#42464D", opacity: "1" },
             },
           },
         },
