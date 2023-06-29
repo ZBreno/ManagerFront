@@ -4,6 +4,9 @@ import { Typography } from "@mui/material";
 import ItemBar from "../ItemBar";
 import { Logout } from "@mui/icons-material";
 import Link from "next/link";
+import EmployeeForm from "../EmployeeForm";
+import MessageForm from "../MessageForm";
+import DepartmentForm from "../DepartmentForm";
 
 interface Option {
   name: string;
@@ -21,8 +24,13 @@ export default function SideBar({
   onPress,
   currentPage,
 }: SideBarProps) {
+  
   return (
-    <div className={`${ currentPage != 0 && "border-text-500 border-r border-opacity-20"} h-full `}>
+    <div
+      className={`${
+        currentPage != 0 && "border-text-500 border-r border-opacity-20"
+      } h-full `}
+    >
       <nav className=" bg-white flex items-start justify-center h-screen  ">
         <div className="flex flex-col h-screen fixed ">
           <div className="flex flex-row mt-10 mb-10 ml-5 mr-5">
@@ -33,7 +41,10 @@ export default function SideBar({
             />
 
             <div className="flex flex-col justify-center ml-4">
-              <Typography color="neutral.main" className="font-bold text-lg text-text-500">
+              <Typography
+                color="neutral.main"
+                className="font-bold text-lg text-text-500"
+              >
                 Fernando Pessoa
               </Typography>
 
@@ -56,7 +67,10 @@ export default function SideBar({
             </div>
             <div className="ml-5 mr-5 mb-10 flex items-center cursor-pointer">
               <Logout className="text-danger-600" />
-              <Link href={'/login'} className="text-danger-600 font-poppins ml-10 text-2xl">
+              <Link
+                href={"/login"}
+                className="text-danger-600 font-poppins ml-10 text-2xl"
+              >
                 Sair
               </Link>
             </div>

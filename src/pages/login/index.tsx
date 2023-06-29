@@ -99,7 +99,7 @@ export default function Login() {
             </Typography>
           </div>
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={onSubmit}
             className="flex flex-col gap-6 min-w-[30vw]"
           >
             <div>

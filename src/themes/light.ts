@@ -48,7 +48,7 @@ export const LightTheme = createTheme({
                 border: ".5px solid #157AFE",
               },
             },
-            
+
             "& .css-nxo287-MuiInputBase-input-MuiOutlinedInput-input": {
               color: "#FFFFFF", // Nova cor do texto
             },
@@ -76,6 +76,59 @@ export const LightTheme = createTheme({
               color: "#42464D",
               "::placeholder": { color: "#42464D", opacity: "1" },
             },
+          },
+        },
+      },
+    },
+    MuiSelect: {
+      styleOverrides: {
+        root: {
+          "&.secondary": {
+            backgroundColor: "none",
+            border: "0px solid",
+            fontSize: "20px",
+            
+            color: "#002C66",
+           
+            "& fieldset": {
+              border: "10px solid",
+              ":focus": {
+                border: "10px solid #157AFE",
+              },
+            },
+            "& .css-1d3z3hw-MuiOutlinedInput-notchedOutline": {
+              border: "0px solid"
+            },
+          },
+          "&.primary": {
+            backgroundColor: "#F5F7F9",
+            border: "0px solid",
+            fontWeight: "bold",
+            paddingRight: "12px",
+            
+           
+            color: "#42464D",
+           
+            "& fieldset": {
+              border: "0px solid",
+              
+            },
+            
+          },
+          "&.error": {
+            backgroundColor: "#F5F7F9",
+            border: "0px solid",
+            fontWeight: "bold",
+            paddingRight: "12px",
+            
+           
+            color: "#42464D",
+           
+            "& fieldset": {
+              border: ".5px solid #DF473B",
+              
+            },
+            
           },
         },
       },

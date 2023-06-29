@@ -31,7 +31,7 @@ export default function Employees() {
   const columns = ['Nome', 'Setor', 'Ultimo check-in', 'Detalhes']
   return (
     <div className="px-10 mt-10">
-      <Header title="Funcionários" subtitle="Funcionários" options={options} />
+      <Header title="Funcionários" subtitle="Funcionários" options={options}  page={1}/>
       <div className="mt-10">
         <HeaderTable columns={columns}/>
         <div>

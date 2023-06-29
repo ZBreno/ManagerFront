@@ -87,7 +87,7 @@ export default function Dashboard() {
   }, []);
   const columns = ["Nome", "Setor", "Status", "Horário"];
   return (
-    <div className="px-10 pt-10 flex flex-col w-10/12 fixed xl:overflow-hidden 2xl:overflow-hidden h-full">
+    <div className="px-10 pt-10 flex flex-col lg:w-10/12 lg:fixed  xl:overflow-hidden 2xl:overflow-hidden h-full">
       <div>
         <Header title="Dashboard" subtitle="Dashboard" />
       </div>

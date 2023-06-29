@@ -23,7 +23,7 @@ export default function Departments() {
   ];
   return (
     <div className="px-10 mt-10">
-      <Header title="Departamentos" subtitle="Departamento"  />
+      <Header title="Departamentos" subtitle="Departamento" page={3}/>
       <div className="mt-10 flex flex-col">
         {departments.map(({ name, contact, head, action, location }, index) => (
           

@@ -24,8 +24,8 @@ export default function Messages({ messages }: MessageProps) {
 
   return (
     <div className="px-10 mt-10">
-      <Header title="Mensagens" subtitle="Mensagem" options={options} />
-      <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2  gap-4 mt-10">
+      <Header title="Mensagens" subtitle="Mensagem" options={options}  page={2}/>
+      <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2 gap-4 mt-10">
         {messages.map(({ title, sender, department, type }, index) => (
           <Message key={index} title={title} department={department} sender={sender} type={type} />
         ))}

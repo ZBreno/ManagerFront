@@ -94,9 +94,9 @@ export default function Home() {
   );
   const { toogleTheme } = useAppThemeContext();
   return (
-    <main>
+    <main className="h-full">
       <Grid
-        className={`${pages[currentComponent].value == 0 && "bg-gray-200"}`}
+        className={`${pages[currentComponent].value == 0 && "bg-gray-200 "}`}
         container
         
       >
@@ -107,7 +107,7 @@ export default function Home() {
             onPress={setCurrentPage}
           />
         </Grid>
-        <Grid item xs={10}>
+        <Grid item xs={10} className="h-full">
           {pages[currentComponent].component}
         </Grid>
       </Grid>

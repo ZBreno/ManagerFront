@@ -1,25 +1,48 @@
 import { KeyboardArrowDown } from "@mui/icons-material";
+import {
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  SelectProps,
+  Typography,
+} from "@mui/material";
+import { useState } from "react";
 interface Option {
   text: string;
   value: number;
 }
 
-interface SelectFieldProps {
+interface SelectFieldProps extends Omit<SelectProps, "variant"> {
   options: Option[];
+  label?:string;
+  variant?: "primary" | "secondary" | "error";
 }
-export default function SelectField({ options }: SelectFieldProps) {
+export default function SelectField({ options, variant, label, ...rest }: SelectFieldProps) {
+  
+
   return (
-    <form onChange={() => alert('ativou')} className="relative">
-      <div className=" absolute top-1/2 text-text-600 -translate-y-1/2 left-56">
-        <KeyboardArrowDown />
-      </div>
-      <select className="custom-select  pr-8 font-poppins block w-full px-4 py-2 text-xl text-text-600 leading-tight border-gray-300 bg-white rounded appearance-none focus:outline-none focus:border-blue-500">
+    <form onChange={() => alert("ativou")} className="relative">
+      {label && <Typography className={`mb-2 ${variant == 'error' ? 'text-danger-600 font-medium' : 'text-text-500'} `}>{label}</Typography>}
+      <Select
+        labelId="demo-simple-select-label"
+        id="demo-simple-select"
+        value={'0'}
+        {...rest}
+        className={`${variant} w-full `}
+        IconComponent={() => (
+          <KeyboardArrowDown
+            className={`${
+              variant == "secondary" ? " text-text-600" : "text-primary-500"
+            }`}
+          />
+        )}
+      >
         {options.map(({ text, value }) => (
-          <option key={value} className="text-xl font-normal" value={value}>
+          <MenuItem className={``} key={value} value={value}>
             {text}
-          </option>
+          </MenuItem>
         ))}
-      </select>
+      </Select>
     </form>
   );
 }
