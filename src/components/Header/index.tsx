@@ -9,6 +9,10 @@ import ModalForm from "../Modal";
 import EmployeeForm from "../EmployeeForm";
 import MessageForm from "../MessageForm";
 import DepartmentForm from "../DepartmentForm";
+import { useForm, Controller } from "react-hook-form";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
+
 interface Option {
   text: string;
   value: number;
@@ -33,9 +37,11 @@ export default function Header({
   };
   const forms = [
     { page: <EmployeeForm handleModal={() => setOpen(!open)} /> },
-    { page: <MessageForm /> },
-    { page: <DepartmentForm /> },
+    { page: <MessageForm handleModal={() => setOpen(!open)} /> },
+    { page: <DepartmentForm handleModal={() => setOpen(!open)} /> },
   ];
+
+  const { control } = useForm();
   return (
     <div>
       <div className="flex justify-between  items-center">
@@ -50,10 +56,18 @@ export default function Header({
             <Circle className="text-text-600" sx={{ width: 8, height: 8 }} />
             {options ? (
               <div>
-                <SelectField
-                  variant="secondary"
-                  options={options}
-                  onChange={() => alert('meu deus deu certo')}
+                <Controller
+                  name="title"
+                  control={control}
+                  defaultValue={"0"}
+                  render={({ field }) => (
+                    <SelectField
+                      variant="secondary"
+                      options={options}
+                      {...field}
+                      onChange={(event) => field.onChange(event.target.value)}
+                    />
+                  )}
                 />
               </div>
             ) : (
@@ -88,7 +102,7 @@ export default function Header({
           <InputField
             variant="search"
             placeholder={`Busque aqui suas ${title.toLowerCase()}`}
-            onChange={() => alert('meu deus, deu certo')}
+            onChange={() => alert("meu deus, deu certo")}
             InputProps={{
               endAdornment: (
                 <Search

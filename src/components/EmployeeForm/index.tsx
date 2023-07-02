@@ -12,22 +12,16 @@ interface EmployeeFormProps {
 }
 
 interface IFormData {
-  title: string;
-  typeMessage: number;
+  name: string;
+  email: string;
+  birthDate: string;
   department: number;
-  message: string;
+  function: string;
+  fingerPrint: string;
+  phone: string;
 }
 
 export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
-  const optionsTypeMessage = [
-    { text: "Justificativa de falta", value: 0 },
-    { text: "Atestado", value: 1 },
-    { text: "Aviso", value: 2 },
-    { text: "Demissão", value: 3 },
-    { text: "Promoção", value: 4 },
-    { text: "Outro", value: 5 },
-    
-  ];
   const optionsDepartment = [
     { text: "Almoxarifado", value: 0 },
     { text: "Recursos Humanos", value: 1 },
@@ -36,10 +30,18 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
 
   const schema = yup
     .object({
-      title: yup.string().required("Este campo é obrigatório"),
-      typeMessage: yup.number().required("Este campo é obrigatório"),
-      department: yup.number().transform(value => value === 2 ? void 0 : value),
-      message: yup.string().required("Este campo é obrigatório"),
+      name: yup.string().required("Este campo é obrigatório"),
+      email: yup
+        .string()
+        .email("E-mail inválido")
+        .required("Este campo é obrigatório"),
+      birthDate: yup.string().required("Este campo é obrigatório"),
+      department: yup
+        .number()
+        .transform((value) => (value === 2 ? void 0 : value)),
+      function: yup.string().required("Este campo é obrigatório"),
+      fingerPrint: yup.string().required("Este campo é obrigatório"),
+      phone: yup.string().required("Este campo é obrigatório"),
     })
     .required();
 
@@ -51,10 +53,13 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
     resolver: yupResolver(schema),
   });
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => alert(JSON.stringify(data, null, 2)));
+  const handleChange = () => {
+    alert("n sei");
+  };
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="bg-white w-[35%] min-w-[450px] rounded-lg -translate-x-1/2 -translate-y-2/4 absolute top-[50%] left-[50%] p-6">
+      <div className="bg-white w-[50%] min-w-[450px] rounded-lg -translate-x-1/2 -translate-y-2/4 absolute top-[50%] left-[50%] p-6">
         <div className="flex justify-between items-center mb-6">
           <Typography className="font-semibold text-xl ">
             Criar funcionário
@@ -67,95 +72,146 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
           </ButtonForm>
         </div>
         <div className="flex flex-col mb-10 gap-4">
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Controller
+                name="name"
+                control={control}
+                render={({ field }) => (
+                  <InputField
+                    variant={`${errors.name?.message ? "error" : "primary"}`}
+                    {...field}
+                    placeholder="Digite aqui"
+                    label="Nome"
+                  />
+                )}
+              />
+              <Typography className="text-danger-600 mt-1">
+                {errors.name?.message}
+              </Typography>
+            </div>
+            <div>
+              <Controller
+                name="email"
+                control={control}
+                render={({ field }) => (
+                  <InputField
+                    variant={`${errors.email?.message ? "error" : "primary"}`}
+                    {...field}
+                    placeholder="Digite aqui"
+                    label="Email"
+                  />
+                )}
+              />
+              <Typography className="text-danger-600 mt-1">
+                {errors.email?.message}
+              </Typography>
+            </div>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Controller
+                name="birthDate"
+                control={control}
+                render={({ field }) => (
+                  <InputField
+                    type="date"
+                    variant={`${
+                      errors.birthDate?.message ? "error" : "primary"
+                    }`}
+                    {...field}
+                    placeholder="Digite aqui"
+                    label="Nome"
+                  />
+                )}
+              />
+              <Typography className="text-danger-600 mt-1">
+                {errors.birthDate?.message}
+              </Typography>
+            </div>
+            <div>
+              <Controller
+                name="department"
+                control={control}
+                defaultValue={0}
+                render={({ field }) => (
+                  <SelectField
+                    variant={`${
+                      errors.department?.message ? "error" : "primary"
+                    }`}
+                    options={optionsDepartment}
+                    label="Departamento"
+                    {...field}
+                    onChange={(event) =>
+                      field.onChange(Number(event.target.value))
+                    }
+                  />
+                )}
+              />
+              <Typography className="text-danger-600 mt-1">
+                {errors.department?.message}
+              </Typography>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Controller
+                name="fingerPrint"
+                control={control}
+                render={({ field }) => (
+                  <InputField
+                    variant={`${
+                      errors.fingerPrint?.message ? "error" : "primary"
+                    }`}
+                    {...field}
+                    placeholder="Digite aqui"
+                    label="Digital"
+                  />
+                )}
+              />
+              <Typography className="text-danger-600 mt-1">
+                {errors.fingerPrint?.message}
+              </Typography>
+            </div>
+            <div>
+              <Controller
+                name="phone"
+                control={control}
+                render={({ field }) => (
+                  <InputField
+                    variant={`${errors.phone?.message ? "error" : "primary"}`}
+                    {...field}
+                    placeholder="(99) 99999-9999"
+                    label="Número de telefone"
+                  />
+                )}
+              />
+              <Typography className="text-danger-600 mt-1">
+                {errors.phone?.message}
+              </Typography>
+            </div>
+          </div>
           <div>
             <Controller
-              name="title"
+              name="function"
               control={control}
               render={({ field }) => (
                 <InputField
-                  variant={`${errors.title?.message ? "error" : "primary"}`}
-                  {...field}
-                  placeholder="Digite aqui"
-                  label="Título"
-                />
-              )}
-            />
-            <Typography className="text-danger-600 mt-1">
-              {errors.title?.message}
-            </Typography>
-          </div>
-          <div>
-            <Controller
-              name="typeMessage"
-              control={control}
-              defaultValue="0"
-              render={({ field }) => (
-                <SelectField
-                  variant={`${
-                    errors.typeMessage?.message ? "error" : "primary"
-                  }`}
-                  options={optionsTypeMessage}
-                  label="Tipo da mensagem"
-                  {...field}
-                  onChange={(event) =>
-                    field.onChange(String(event.target.value))
-                  }
-                />
-              )}
-            />
-            <Typography className="text-danger-600 mt-1">
-              {errors.typeMessage?.message}
-            </Typography>
-          </div>
-          <div>
-            <Controller
-              name="department"
-              control={control}
-              defaultValue="0"
-              render={({ field }) => (
-                <SelectField
-                  variant={`${
-                    errors.department?.message ? "error" : "primary"
-                  }`}
-                  options={optionsDepartment}
-                  label="Departamento"
-                  {...field}
-                  onChange={(event) =>
-                    field.onChange(String(event.target.value))
-                  }
-                />
-              )}
-            />
-            <Typography className="text-danger-600 mt-1">
-              {errors.department?.message}
-            </Typography>
-          </div>
-          {/* 
-          <SelectField
-            variant="primary"
-            options={optionsDepartment}
-            label="Departamento"
-          /> */}
-          <div>
-            <Controller
-              name="message"
-              control={control}
-              render={({ field }) => (
-                <InputField
+                  variant={`${errors.function?.message ? "error" : "primary"}`}
                   multiline
-                  variant={`${errors.title?.message ? "error" : "primary"}`}
                   {...field}
                   placeholder="Digite aqui"
-                  label="Mensagem"
+                  label="Função do funcionário"
                 />
               )}
             />
             <Typography className="text-danger-600 mt-1">
-              {errors.message?.message}
+              {errors.function?.message}
             </Typography>
           </div>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex justify-start gap-4 items-center">
           <ButtonForm
             onClick={handleModal}
             style={{ textTransform: "none" }}
