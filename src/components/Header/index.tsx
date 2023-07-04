@@ -31,7 +31,6 @@ export default function Header({
   page,
 }: HeaderProps) {
   const [open, setOpen] = useState(false);
-  console.log(open);
   const handleModal = () => {
     setOpen(!open);
   };
