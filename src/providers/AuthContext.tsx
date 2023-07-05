@@ -1,9 +1,17 @@
-import { createContext } from "react";
+import React, { createContext } from "react";
+import { useProviderAuth } from "@/hooks/useProviderAuth";
 
-interface AuthContextData {
-    children: React.ReactNode
+type AuthContextType = ReturnType<typeof useProviderAuth>;
+
+export const AuthContext = createContext<AuthContextType>({} as AuthContextType);
+interface AuthProviderProps {
+  children: React.ReactNode;
 }
 
-export const AuthContext = createContext({} as AuthContextData);
-
-
+export const AuthProvider = ({ children }: AuthProviderProps) => {
+  return (
+    <AuthContext.Provider value={useProviderAuth()}>
+      {children}
+    </AuthContext.Provider>
+  );
+};

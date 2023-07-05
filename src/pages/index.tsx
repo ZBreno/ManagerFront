@@ -17,8 +17,9 @@ import Employees from "@/components/ItemBarContent/Employees";
 import Annoucement from "@/components/ItemBarContent/Annoucements";
 import Department from "@/components/ItemBarContent/Departments";
 import { useState } from "react";
-import { useGetMessage } from "@/hooks/useGetMessage";
+import { useGetMessage } from "@/hooks/useMessage";
 import { useProviderTheme } from "@/hooks/useProviderTheme";
+import { useTheme } from "@/hooks/useTheme";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -57,7 +58,8 @@ export default function Home() {
   const currentComponent = pages.findIndex(
     (item) => item.value === currentPage
   );
-  const { toogleTheme } = useProviderTheme();
+  const { themeName } = useTheme();
+  
   return (
     <main className="h-full">
       <Grid

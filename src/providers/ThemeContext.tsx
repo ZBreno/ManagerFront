@@ -16,6 +16,7 @@ interface ThemeProviderProps {
 export const AppThemeProvider = ({ children }: ThemeProviderProps) => {
 
   const { theme } = useProviderTheme();
+  
 
   return (
     <ThemeContext.Provider value={useProviderTheme()}>

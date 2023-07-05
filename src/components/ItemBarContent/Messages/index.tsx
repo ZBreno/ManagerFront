@@ -1,9 +1,7 @@
-import { useGetMessage } from "@/hooks/useGetMessage";
+import { useGetMessage } from "@/hooks/useMessage";
 import Header from "../../Header";
 import Message from "@/components/Message";
-import api from "@/utils/api";
-import { useEffect } from "react";
-
+import CircularProgress from "@mui/material/CircularProgress";
 interface Message {
   title: string;
   sender: string;
@@ -16,8 +14,8 @@ interface MessageProps {
 }
 
 export default function Messages() {
-  const {isLoading: isLoadingMessage, data: messages} = useGetMessage()
-  console.log(messages)
+  const { isLoading: isLoadingMessage, data: messages } = useGetMessage();
+  console.log(messages);
   const options = [
     { text: "Justificativa de falta", value: 0 },
     { text: "Atestado", value: 1 },
@@ -35,17 +33,25 @@ export default function Messages() {
         options={options}
         page={2}
       />
-      <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2 gap-4 mt-10">
-        {messages.map(({ title, manager, department, message_type }, index) => (
-          <Message
-            key={index}
-            title={title}
-            department={department}
-            sender={manager}
-            type={message_type}
-          />
-        ))}
-      </div>
+      {isLoadingMessage ? (
+        <div className="flex justify-center items-center mt-10">
+          <CircularProgress />
+        </div>
+      ) : (
+        <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2 gap-4 mt-10">
+          {messages.map(
+            ({ title, manager, department, message_type }, index) => (
+              <Message
+                key={index}
+                title={title}
+                department={department}
+                sender={manager}
+                type={message_type}
+              />
+            )
+          )}
+        </div>
+      )}
     </div>
   );
 }
