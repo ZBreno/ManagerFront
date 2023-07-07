@@ -16,10 +16,11 @@ import Dashboard from "@/components/ItemBarContent/Dashboard";
 import Employees from "@/components/ItemBarContent/Employees";
 import Annoucement from "@/components/ItemBarContent/Annoucements";
 import Department from "@/components/ItemBarContent/Departments";
-import { useState } from "react";
-import { useGetMessage } from "@/hooks/useMessage";
-import { useProviderTheme } from "@/hooks/useProviderTheme";
+import { useEffect, useState } from "react";
 import { useTheme } from "@/hooks/useTheme";
+import { useAuth } from "@/hooks/useAuth";
+import { getAuthToken } from "@/utils/authToken";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 export default function Home() {
   const [currentPage, setCurrentPage] = useState<number>(0);
@@ -59,32 +60,33 @@ export default function Home() {
     (item) => item.value === currentPage
   );
   const { themeName } = useTheme();
-  
-  return (
-    <main className="h-full">
-      <Grid
-        className={`${pages[currentComponent].value == 0 && "bg-gray-200 "}`}
-        container
-        
-      >
-        <Grid item xs={2} >
-          <SideBar
-            options={options}
-            currentPage={currentPage}
-            onPress={setCurrentPage}
-          />
-        </Grid>
-        <Grid item xs={10} className="h-full">
-          {pages[currentComponent].component}
-        </Grid>
-      </Grid>
 
-      {/* <ButtonForm
+  return (
+    <ProtectedRoute>
+      <main className="h-full">
+        <Grid
+          className={`${pages[currentComponent].value == 0 && "bg-gray-200 "}`}
+          container
+        >
+          <Grid item xs={2}>
+            <SideBar
+              options={options}
+              currentPage={currentPage}
+              onPress={setCurrentPage}
+            />
+          </Grid>
+          <Grid item xs={10} className="h-full">
+            {pages[currentComponent].component}
+          </Grid>
+        </Grid>
+
+        {/* <ButtonForm
         variant="contained"
         color="error"
         text="Eu não sei"
         onClick={toogleTheme}
       /> */}
-    </main>
+      </main>
+    </ProtectedRoute>
   );
 }

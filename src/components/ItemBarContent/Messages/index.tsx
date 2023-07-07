@@ -1,12 +1,15 @@
-import { useGetMessage } from "@/hooks/useMessage";
+import { useGetMessage } from "@/hooks/message";
 import Header from "../../Header";
 import Message from "@/components/Message";
 import CircularProgress from "@mui/material/CircularProgress";
 interface Message {
   title: string;
-  sender: string;
   department: string;
-  type: string;
+  attachment: any;
+  manager: string;
+  read: boolean;
+  message_type: string;
+  description: string;
 }
 
 interface MessageProps {
@@ -14,7 +17,10 @@ interface MessageProps {
 }
 
 export default function Messages() {
-  const { isLoading: isLoadingMessage, data: messages } = useGetMessage();
+  const {
+    isLoading: isLoadingMessage,
+    data: messages,
+  }: { isLoading: any; data: Message[] } = useGetMessage();
   console.log(messages);
   const options = [
     { text: "Justificativa de falta", value: 0 },

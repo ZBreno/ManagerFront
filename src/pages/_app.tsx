@@ -6,13 +6,14 @@ import { AuthProvider } from "@/providers/AuthContext";
 const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }: AppProps) {
+
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <AppThemeProvider>
+    <AppThemeProvider>
+      <QueryClientProvider client={queryClient}>
+        <AuthProvider>
           <Component {...pageProps} />
-        </AppThemeProvider>
-      </AuthProvider>
-    </QueryClientProvider>
+        </AuthProvider>
+      </QueryClientProvider>
+    </AppThemeProvider>
   );
 }

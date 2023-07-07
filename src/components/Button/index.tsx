@@ -1,7 +1,7 @@
 import { Button, ButtonProps } from '@mui/material'
 
 interface ButtonFormProps extends ButtonProps {
-    text?: string;
+    text?: string | React.ReactNode;
     children?: React.ReactNode;
 }
 

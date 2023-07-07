@@ -7,6 +7,13 @@ import Link from "next/link";
 import EmployeeForm from "../EmployeeForm";
 import MessageForm from "../MessageForm";
 import DepartmentForm from "../DepartmentForm";
+import { useAuth } from "@/hooks/useAuth";
+import { useRouter } from "next/router";
+import ButtonForm from "../Button";
+import { getAuthToken } from "@/utils/authToken";
+import { useEffect } from "react";
+import { logout } from "@/services/auth";
+import LoadingContainer from "../LoadingContainer";
 
 interface Option {
   name: string;
@@ -24,6 +31,16 @@ export default function SideBar({
   onPress,
   currentPage,
 }: SideBarProps) {
+  const { logoutMutation, user } = useAuth();
+  const router = useRouter();
+  const handleLogout = () => {
+    logoutMutation.mutate(null, {
+      onSuccess: () => {
+        router.push('/login')
+      },
+    });
+  };
+ 
   
   return (
     <div
@@ -45,11 +62,11 @@ export default function SideBar({
                 color="neutral.main"
                 className="font-bold text-lg text-text-500"
               >
-                Fernando Pessoa
+                {user?.name}
               </Typography>
 
               <Typography className="font-regular text-sm text-gray-600">
-                Funcionário
+                Administrador
               </Typography>
             </div>
           </div>
@@ -67,12 +84,13 @@ export default function SideBar({
             </div>
             <div className="ml-5 mr-5 mb-10 flex items-center cursor-pointer">
               <Logout className="text-danger-600" />
-              <Link
-                href={"/login"}
-                className="text-danger-600 font-poppins ml-10 text-2xl"
-              >
-                Sair
-              </Link>
+              <ButtonForm
+                disableRipple={true}
+                onClick={handleLogout}
+                className="text-danger-600 font-poppins ml-10 text-2xl hover:bg-white"
+                style={{ textTransform: "none" }}
+                text="Sair"
+              />
             </div>
           </div>
         </div>

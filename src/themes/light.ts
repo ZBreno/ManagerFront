@@ -204,10 +204,10 @@ export const LightTheme = createTheme({
       contrastText: "#fff",
     },
     error: {
-      main: "#FFDDDA",
-      dark: "#FFDDDA",
-      light: "#FFDDDA",
-      contrastText: "#FF6B60",
+      main: "#DF473B",
+      dark: "#DF473B",
+      light: "#DF473B",
+      contrastText: "#DF473B",
     },
     warning: {
       main: "#FFDDDA",

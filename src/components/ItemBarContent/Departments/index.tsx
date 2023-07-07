@@ -28,6 +28,7 @@ export default function Departments() {
         {departments.map(({ name, contact, head, action, location }, index) => (
           
             <Accordions
+              key={index}
               name={name}
               contact={contact}
               head={head}

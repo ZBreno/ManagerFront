@@ -2,9 +2,10 @@ export const AUTH_TOKEN_KEY = "auth-token";
 
 export async function getAuthToken() {
   return localStorage.getItem(AUTH_TOKEN_KEY);
+  
 }
 
-export async function setAuthToken(token: string) {
+export async function setAuthToken(token: any) {
   return localStorage.setItem(AUTH_TOKEN_KEY, token);
 }
 

@@ -2,7 +2,8 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import * as AuthToken from "@/utils/authToken";
 import { login, logout } from "@/services/auth";
 import { useState } from "react";
-import { loadLoggedInUser } from "@/services/me";
+import api from "@/utils/api";
+
 
 export const QueryKeys = {
   all: ["auth"] as const,
@@ -11,15 +12,17 @@ export const QueryKeys = {
 
 export const useProviderAuth = () => {
   const [user, setUser] = useState<null | false | Record<string, string>>();
-
+  
+  
   const { refetch: getLoggedUser } = useQuery({
     queryKey: QueryKeys.me(),
     queryFn: async () => {
-      const response = await loadLoggedInUser();
-      setUser(response.data);
+      const token = await AuthToken.getAuthToken()
+      const response : any = await api.get(`/users/me/`, { headers: { Authorization: `Bearer ${token}` } });;
+      setUser(response?.data);
       return response.data;
     },
-
+  
     onError: () => {
       setUser(false);
     },
@@ -27,8 +30,8 @@ export const useProviderAuth = () => {
 
   const loginMutation = useMutation({
     mutationFn: login,
-    onSuccess: (data) => {
-      AuthToken.setAuthToken(data.data.token);
+    onSuccess: (data : any) => {
+      AuthToken.setAuthToken(data.data.access);
       getLoggedUser();
     },
     onError: (err) => {
@@ -47,6 +50,7 @@ export const useProviderAuth = () => {
   return {
     getLoggedUser,
     user,
+    setUser,
     loginMutation,
     logoutMutation,
   }

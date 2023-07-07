@@ -54,7 +54,7 @@ export default function MessageForm({ handleModal }: IMessageFormProps) {
 
   const onSubmit = handleSubmit((data) => alert(JSON.stringify(data, null, 2)));
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={onSubmit}>
       <div className="bg-white w-[35%] min-w-[450px] rounded-lg -translate-x-1/2 -translate-y-2/4 absolute top-[50%] left-[50%] p-6">
         <div className="flex justify-between items-center mb-6">
           <Typography className="font-semibold text-xl ">
