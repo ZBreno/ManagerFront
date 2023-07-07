@@ -34,11 +34,15 @@ export const useDeleteMessage = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteMessage,
-    onMutate: ({ id }) => {
-      const key = QueryKeys.item(id);
-      const messages = queryClient.getQueriesData(key);
-      const newMessages = messages.filter((message) => message !== id)
-      queryClient.setQueriesData(key, newMessages);
+    onMutate: () => {
+      const key = QueryKeys.all
+      const message = queryClient.getQueryData(key)
+
+      return message
+    },
+    onSuccess: () => {
+      // Caso a mutação seja bem-sucedida, refetch para atualizar os dados da query
+      queryClient.invalidateQueries(QueryKeys.all);
     },
   });
 };

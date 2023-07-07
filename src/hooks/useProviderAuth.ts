@@ -50,7 +50,6 @@ export const useProviderAuth = () => {
   return {
     getLoggedUser,
     user,
-    setUser,
     loginMutation,
     logoutMutation,
   }

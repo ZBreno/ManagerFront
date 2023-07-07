@@ -51,7 +51,6 @@ export default function Login() {
     .object({
       username: yup
         .string()
-        .email("E-mail inválido")
         .required("Este campo é obrigatório"),
       password: yup.string().required("Este campo é obrigatório"),
     })
@@ -80,7 +79,7 @@ export default function Login() {
       },
     });
   });
-
+ 
 
   return (
     <ProtectedRoute>

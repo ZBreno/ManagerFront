@@ -2,12 +2,14 @@ import { MailOutline, MoreVert, Delete } from "@mui/icons-material";
 import { Menu, MenuItem, Typography } from "@mui/material";
 import ButtonForm from "../Button";
 import { useState } from "react";
+import { useDeleteMessage } from "@/hooks/message";
 
 interface MessageProps {
   title: string;
   sender: string;
   department: string;
   type: string;
+  id: string;
 }
 
 export default function Message({
@@ -15,6 +17,7 @@ export default function Message({
   sender,
   department,
   type,
+  id,
 }: MessageProps) {
   const typeMessages = [
     {
@@ -67,6 +70,22 @@ export default function Message({
     setAnchorEl(null);
   };
 
+  const deleteMessage = useDeleteMessage();
+
+  const handleDeleteMessage = () => {
+    deleteMessage.mutate(
+      id,
+      {
+        onSuccess: () => {
+          console.log("apagou");
+        },
+        onError: (err) => {
+          alert(err);
+        },
+      }
+    );
+    setAnchorEl(null);
+  };
   return (
     <div className={`${bg} px-3 py-4 rounded-lg`}>
       <div className=" grid gap-6">
@@ -101,7 +120,7 @@ export default function Message({
               </MenuItem>
               <MenuItem
                 className="text-danger-600 text-sm"
-                onClick={handleClose}
+                onClick={handleDeleteMessage}
               >
                 Excluir
               </MenuItem>

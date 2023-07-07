@@ -2,8 +2,10 @@ import { useGetMessage } from "@/hooks/message";
 import Header from "../../Header";
 import Message from "@/components/Message";
 import CircularProgress from "@mui/material/CircularProgress";
+import { Typography } from "@mui/material";
 interface Message {
   title: string;
+  id: number;
   department: string;
   attachment: any;
   manager: string;
@@ -17,10 +19,7 @@ interface MessageProps {
 }
 
 export default function Messages() {
-  const {
-    isLoading: isLoadingMessage,
-    data: messages,
-  }: { isLoading: any; data: Message[] } = useGetMessage();
+  const { isLoading: isLoadingMessage, data: messages } = useGetMessage();
   console.log(messages);
   const options = [
     { text: "Justificativa de falta", value: 0 },
@@ -45,17 +44,18 @@ export default function Messages() {
         </div>
       ) : (
         <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2 gap-4 mt-10">
-          {messages.map(
-            ({ title, manager, department, message_type }, index) => (
+          {messages.map(({id,title,department,attachment, manager,read,message_type,description}, index) => (
+            <div>
               <Message
                 key={index}
                 title={title}
-                department={department}
-                sender={manager}
+                department={department.name}
+                sender={manager.name}
                 type={message_type}
+                id={String(id)}
               />
-            )
-          )}
+            </div>
+          ))}
         </div>
       )}
     </div>
