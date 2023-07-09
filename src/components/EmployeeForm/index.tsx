@@ -6,6 +6,8 @@ import SelectField from "../Select";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import RadioField from "../Radio";
+import { useCreateEmployee } from "@/hooks/employee";
 
 interface EmployeeFormProps {
   handleModal: () => void;
@@ -19,13 +21,14 @@ interface IFormData {
   function: string;
   fingerPrint: string;
   phone: string;
+  head: string;
 }
 
 export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
   const optionsDepartment = [
-    { text: "Almoxarifado", value: 0 },
-    { text: "Recursos Humanos", value: 1 },
-    { text: "Todos", value: 2 },
+    { text: "Almoxarifado", value: 1 },
+    { text: "Recursos Humanos", value: 2 },
+    { text: "Todos", value: 3 },
   ];
 
   const schema = yup
@@ -37,11 +40,11 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
         .required("Este campo é obrigatório"),
       birthDate: yup.string().required("Este campo é obrigatório"),
       department: yup
-        .number()
-        .transform((value) => (value === 2 ? void 0 : value)),
+        .number(),
       function: yup.string().required("Este campo é obrigatório"),
       fingerPrint: yup.string().required("Este campo é obrigatório"),
       phone: yup.string().required("Este campo é obrigatório"),
+      head: yup.string().required("Este campo é obrigatório"),
     })
     .required();
 
@@ -52,11 +55,21 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
   } = useForm<IFormData>({
     resolver: yupResolver(schema),
   });
+  const optionsRadio = [
+    { text: "Sim", value: "SIM" },
+    { text: "Não", value: "NAO" },
+  ];
 
-  const onSubmit = handleSubmit((data) => alert(JSON.stringify(data, null, 2)));
-  const handleChange = () => {
-    alert("n sei");
-  };
+  const createEmployee = useCreateEmployee();
+  const onSubmit = handleSubmit((data) =>
+    createEmployee.mutate(data, {
+      onSuccess: () => {
+        alert("deu certo");
+      },
+      onError: (err) => alert(err),
+    })
+  );
+
   return (
     <form onSubmit={onSubmit}>
       <div className="bg-white w-[50%] min-w-[450px] rounded-lg -translate-x-1/2 -translate-y-2/4 absolute top-[50%] left-[50%] p-6">
@@ -121,7 +134,7 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
                     }`}
                     {...field}
                     placeholder="Digite aqui"
-                    label="Nome"
+                    label="Data de nascimento"
                   />
                 )}
               />
@@ -192,23 +205,46 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
               </Typography>
             </div>
           </div>
-          <div>
-            <Controller
-              name="function"
-              control={control}
-              render={({ field }) => (
-                <InputField
-                  variant={`${errors.function?.message ? "error" : "primary"}`}
-                  multiline
-                  {...field}
-                  placeholder="Digite aqui"
-                  label="Função do funcionário"
-                />
-              )}
-            />
-            <Typography className="text-danger-600 mt-1">
-              {errors.function?.message}
-            </Typography>
+          <div className="grid grid-cols-2 gap-4">
+            <div>
+              <Controller
+                name="function"
+                control={control}
+                render={({ field }) => (
+                  <InputField
+                    variant={`${
+                      errors.function?.message ? "error" : "primary"
+                    }`}
+                    multiline
+                    {...field}
+                    placeholder="Digite aqui"
+                    label="Função do funcionário"
+                  />
+                )}
+              />
+              <Typography className="text-danger-600 mt-1">
+                {errors.function?.message}
+              </Typography>
+            </div>
+            <div>
+              <Controller
+                name="head"
+                control={control}
+                render={({ field }) => (
+                  <RadioField
+                    variant={`${errors.head?.message ? "error" : "primary"}`}
+                    {...field}
+                    options={optionsRadio}
+                    onChange={(event) => field.onChange(event.target.value)}
+                    placeholder="Digite aqui"
+                    label="Responsável"
+                  />
+                )}
+              />
+              <Typography className="text-danger-600 mt-1">
+                {errors.head?.message}
+              </Typography>
+            </div>
           </div>
         </div>
         <div className="flex justify-start gap-4 items-center">
@@ -220,7 +256,7 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
           />
           <ButtonForm
             style={{ textTransform: "none" }}
-            text="Criar mensagem"
+            text="Criar funcionário"
             type="submit"
             className="bg-success-100 hover:bg-success-100 text-success-600 px-6 py-1 font-bold rounded-lg"
           />

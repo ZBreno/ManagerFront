@@ -1,11 +1,12 @@
-import { Grid, Typography } from "@mui/material";
+import { CircularProgress, Grid, Typography } from "@mui/material";
 import Header from "../../Header";
 import Employee from "@/components/Employee";
 import HeaderTable from "@/components/HeaderTable";
+import { useGetEmployee } from "@/hooks/employee";
 
 export default function Employees() {
   const options = [
-    { text: "Rercusos Humanos", value: 0 },
+    { text: "Rercusos Humanos(RH)", value: 0 },
     { text: "Almoxarifado", value: 1 },
     { text: "Administrativo", value: 2 },
   ];
@@ -28,24 +29,41 @@ export default function Employees() {
     },
   ];
 
+  const {isLoading: isLoadingEmployee, data: employeess} = useGetEmployee()
+ 
   const columns = ['Nome', 'Setor', 'Ultimo check-in', 'Detalhes']
   return (
     <div className="px-10 mt-10">
       <Header title="Funcionários" subtitle="Funcionários" options={options}  page={1}/>
-      <div className="mt-10">
+      {isLoadingEmployee ? (
+        <div className="flex justify-center items-center mt-10">
+          <CircularProgress />
+        </div>
+      ) : (
+        <div className="mt-10">
         <HeaderTable columns={columns}/>
         <div>
-          {employees.map(({ name, department, lastCheck }, index) => (
+          {employeess.map(({ id, department, status,name, email, birth_date,  head,assignment, finger_print, code, phone}, index) => (
             <Employee
               key={index}
               name={name}
               department={department}
-              lastCheck={lastCheck}
+              status={status}
+              id={String(id)}
+              email={email}
+              birth_date={birth_date}
+              head={head}
+              assignment={assignment}
+              finger_print={finger_print}
+              code={code}
+              phone={phone}
               bg={index % 2 == 0}
             />
           ))}
         </div>
       </div>
+      )}
+      
     </div>
   );
 }

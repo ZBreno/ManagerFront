@@ -1,6 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { createMessage, deleteMessage, getMessage } from "@/services/messages";
-import { useState } from "react";
+import { createMessage, deleteMessage, getMessage, getMessageId } from "@/services/message";
 
 export const QueryKeys = {
   all: ["messages"] as const,
@@ -12,6 +11,16 @@ export const useGetMessage = () => {
     queryKey: QueryKeys.all,
     queryFn: async () => {
       const response: any = await getMessage();
+      return response.data;
+    },
+  });
+};
+
+export const useGetMessageId = (messageId: string) => {
+  return useQuery({
+    queryKey: QueryKeys.item(messageId),
+    queryFn: async () => {
+      const response: any = await getMessageId(messageId);
       return response.data;
     },
   });
@@ -34,12 +43,6 @@ export const useDeleteMessage = () => {
   const queryClient = useQueryClient();
   return useMutation({
     mutationFn: deleteMessage,
-    onMutate: () => {
-      const key = QueryKeys.all
-      const message = queryClient.getQueryData(key)
-
-      return message
-    },
     onSuccess: () => {
       // Caso a mutação seja bem-sucedida, refetch para atualizar os dados da query
       queryClient.invalidateQueries(QueryKeys.all);

@@ -26,7 +26,6 @@ export default function SelectField({ options, variant, label, ...rest }: Select
       <Select
         labelId="demo-simple-select-label"
         id="demo-simple-select"
-        value={'0'}
         {...rest}
         className={`${variant} w-full `}
         IconComponent={() => (

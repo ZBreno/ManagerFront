@@ -55,7 +55,7 @@ export default function Accordions({
         <AccordionDetails className="pl-6 pt-0 mt-0">
           <Grid container>
             <Grid item xs={6}>
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-4 mr-5">
                 <div>
                   <Typography className="font-bold">Nome</Typography>
                   <Typography>{name}</Typography>

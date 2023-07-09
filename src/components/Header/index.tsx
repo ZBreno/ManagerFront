@@ -85,7 +85,7 @@ export default function Header({
               style={{ textTransform: "none" }}
               className="bg-primary-500 text-white hover:bg-primary-500 px-6 py-2  font-medium rounded-sm text-base"
             />
-            <ModalForm hide={open} />
+      
             <Modal
               open={open}
               onClose={() => setOpen(!open)}

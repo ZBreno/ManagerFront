@@ -9,17 +9,16 @@ import {
 import { Alert, CircularProgress, Typography } from "@mui/material";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useAuth } from "@/hooks/useAuth";
 import { useRouter } from "next/router";
-import { getAuthToken } from "@/utils/authToken";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 interface IFormData {
-  username: string;
+  email: string;
   password: string;
 }
 
@@ -49,8 +48,9 @@ export default function Login() {
 
   const schema = yup
     .object({
-      username: yup
+      email: yup
         .string()
+        .email('E-mail inválido')
         .required("Este campo é obrigatório"),
       password: yup.string().required("Este campo é obrigatório"),
     })
@@ -124,12 +124,12 @@ export default function Login() {
             >
               <div>
                 <Controller
-                  name="username"
+                  name="email"
                   control={control}
                   render={({ field }) => (
                     <InputField
                       variant={`${
-                        errors.username?.message ? "error" : "primary"
+                        errors.email?.message ? "error" : "primary"
                       }`}
                       placeholder="Insira seu e-mail"
                       label="E-mail"
@@ -146,7 +146,7 @@ export default function Login() {
                   )}
                 />
                 <Typography className="text-danger-600 mt-1">
-                  {errors.username?.message}
+                  {errors.email?.message}
                 </Typography>
               </div>
               <div>

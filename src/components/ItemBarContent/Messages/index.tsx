@@ -44,18 +44,32 @@ export default function Messages() {
         </div>
       ) : (
         <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2 gap-4 mt-10">
-          {messages.map(({id,title,department,attachment, manager,read,message_type,description}, index) => (
-            <div>
-              <Message
-                key={index}
-                title={title}
-                department={department.name}
-                sender={manager.name}
-                type={message_type}
-                id={String(id)}
-              />
-            </div>
-          ))}
+          {messages.map(
+            (
+              {
+                id,
+                title,
+                department,
+                attachment,
+                manager,
+                read,
+                message_type,
+                description,
+              },
+              index
+            ) => (
+              <div>
+                <Message
+                  key={index}
+                  title={title}
+                  department={department?.name ? department?.name : "Todos"}
+                  sender={manager.name}
+                  type={message_type}
+                  id={String(id)}
+                />
+              </div>
+            )
+          )}
         </div>
       )}
     </div>

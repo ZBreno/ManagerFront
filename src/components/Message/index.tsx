@@ -1,8 +1,9 @@
 import { MailOutline, MoreVert, Delete } from "@mui/icons-material";
-import { Menu, MenuItem, Typography } from "@mui/material";
+import { Menu, MenuItem, Modal, Typography } from "@mui/material";
 import ButtonForm from "../Button";
 import { useState } from "react";
 import { useDeleteMessage } from "@/hooks/message";
+import MessageInfo from "../MoreInfo/Message";
 
 interface MessageProps {
   title: string;
@@ -69,21 +70,18 @@ export default function Message({
   const handleClose = () => {
     setAnchorEl(null);
   };
-
+  const [openModal, setOpenModal] = useState(false);
   const deleteMessage = useDeleteMessage();
 
   const handleDeleteMessage = () => {
-    deleteMessage.mutate(
-      id,
-      {
-        onSuccess: () => {
-          console.log("apagou");
-        },
-        onError: (err) => {
-          alert(err);
-        },
-      }
-    );
+    deleteMessage.mutate(id, {
+      onSuccess: () => {
+        console.log("apagou");
+      },
+      onError: (err) => {
+        alert(err);
+      },
+    });
     setAnchorEl(null);
   };
   return (
@@ -114,7 +112,7 @@ export default function Message({
             >
               <MenuItem
                 className=" hover:bg-white text-text-500 text-sm"
-                onClick={handleClose}
+                onClick={() => setOpenModal(!openModal)}
               >
                 Ler mais
               </MenuItem>
@@ -137,7 +135,15 @@ export default function Message({
             className={`px-4 text-white rounded-sm py-1`}
             style={{ textTransform: "none", backgroundColor: bgBtn }}
             text="Ler mais"
+            onClick={() => setOpenModal(!openModal)}
           />
+          <Modal
+            open={openModal}
+            onClose={() => setOpenModal(!openModal)}
+            aria-labelledby="title"
+          >
+            <MessageInfo id={String(id)} handleModal={() => setOpenModal(!openModal)}/>
+          </Modal>
         </div>
       </div>
     </div>
