@@ -9,14 +9,14 @@ interface EmployeeProps {
   department: {
     id: number;
     name: string;
-    function: string;
+    assignment: string;
     contact: string;
     location: string;
   };
   name: string;
   status: {
     checkin: boolean;
-    lastCheck?: string;
+    date?: string;
   };
   email: string;
   birth_date: string;
@@ -60,7 +60,7 @@ export default function Employee({
       </Grid>
       <Grid item xs={3}>
         <Typography className="font-regular text-center text-base text-text-500">
-          {status?.checkin ? status.lastCheck : "-"}
+          {status?.checkin ? status?.date: "-"}
         </Typography>
       </Grid>
       <Grid item xs={3} className="flex justify-center">

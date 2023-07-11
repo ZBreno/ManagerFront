@@ -7,7 +7,7 @@ import MessageInfo from "../MoreInfo/Message";
 
 interface MessageProps {
   title: string;
-  sender: string;
+  sender: string | undefined;
   department: string;
   type: string;
   id: string;
@@ -127,7 +127,7 @@ export default function Message({
         </div>
 
         <div>
-          <Typography className={`font-semibold text-xs`}>{sender}</Typography>
+          <Typography className={`font-semibold text-xs`}>{sender ? sender : '-'}</Typography>
           <Typography className="font-bold text-xl">{department}</Typography>
         </div>
         <div className={`flex justify-end`}>

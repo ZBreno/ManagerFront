@@ -1,6 +1,6 @@
 "use client";
 import ButtonForm from "@/components/Button";
-import SideBar from "@/components/SIdeBar";
+import SideBar from "@/components/SideBar";
 import { Grid } from "@mui/material";
 import {
   SpaceDashboard,

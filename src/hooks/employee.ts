@@ -2,9 +2,11 @@ import {
   createEmployee,
   deleteEmployee,
   getEmployee,
+  getFilterEmployee,
   patchEmployee,
 } from "@/services/employee";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCallback } from "react";
 
 export const QueryKeys = {
   all: ["employees"] as const,
@@ -18,6 +20,19 @@ export const useGetEmployee = () => {
       const response: any = await getEmployee();
       return response.data;
     },
+  });
+};
+
+export const useGetFilterEmployee = (id?: any) => {
+  const fetchData = useCallback(async () => {
+    const response: any = await getFilterEmployee(id);
+    return response.data;
+  }, [id]);
+
+  return useQuery({
+    queryKey: QueryKeys.all,
+    queryFn: fetchData,
+    enabled: false,
   });
 };
 

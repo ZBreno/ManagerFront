@@ -50,7 +50,7 @@ export default function Login() {
     .object({
       email: yup
         .string()
-        .email('E-mail inválido')
+        .email("E-mail inválido")
         .required("Este campo é obrigatório"),
       password: yup.string().required("Este campo é obrigatório"),
     })
@@ -79,7 +79,6 @@ export default function Login() {
       },
     });
   });
- 
 
   return (
     <ProtectedRoute>
@@ -128,9 +127,7 @@ export default function Login() {
                   control={control}
                   render={({ field }) => (
                     <InputField
-                      variant={`${
-                        errors.email?.message ? "error" : "primary"
-                      }`}
+                      variant={`${errors.email?.message ? "error" : "primary"}`}
                       placeholder="Insira seu e-mail"
                       label="E-mail"
                       {...field}

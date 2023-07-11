@@ -1,8 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import * as AuthToken from "@/utils/authToken";
 import { login, logout } from "@/services/auth";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "@/utils/api";
+import { useRouter } from "next/router";
 
 
 export const QueryKeys = {
@@ -12,8 +13,9 @@ export const QueryKeys = {
 
 export const useProviderAuth = () => {
   const [user, setUser] = useState<null | false | Record<string, string>>();
-  
-  
+  const router = useRouter()
+
+
   const { refetch: getLoggedUser } = useQuery({
     queryKey: QueryKeys.me(),
     queryFn: async () => {
@@ -25,6 +27,7 @@ export const useProviderAuth = () => {
   
     onError: () => {
       setUser(false);
+
     },
   });
 

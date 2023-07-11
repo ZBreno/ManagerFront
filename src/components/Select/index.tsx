@@ -2,14 +2,12 @@ import { KeyboardArrowDown } from "@mui/icons-material";
 import {
   MenuItem,
   Select,
-  SelectChangeEvent,
   SelectProps,
   Typography,
 } from "@mui/material";
-import { useState } from "react";
 interface Option {
   text: string;
-  value: number;
+  value: number | string;
 }
 
 interface SelectFieldProps extends Omit<SelectProps, "variant"> {

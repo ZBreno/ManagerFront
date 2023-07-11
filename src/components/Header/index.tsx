@@ -4,7 +4,7 @@ import { Circle, Add, Search, KeyboardArrowDown } from "@mui/icons-material";
 import SelectField from "../Select";
 import ButtonForm from "../Button";
 import InputField from "../Input";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ModalForm from "../Modal";
 import EmployeeForm from "../EmployeeForm";
 import MessageForm from "../MessageForm";
@@ -12,10 +12,12 @@ import DepartmentForm from "../DepartmentForm";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { useGetFilterEmployee } from "@/hooks/employee";
+import { useGetFilterMessage } from "@/hooks/message";
 
 interface Option {
   text: string;
-  value: number;
+  value: any;
 }
 
 interface HeaderProps {
@@ -39,8 +41,32 @@ export default function Header({
     { page: <MessageForm handleModal={() => setOpen(!open)} /> },
     { page: <DepartmentForm handleModal={() => setOpen(!open)} /> },
   ];
+  const [value, setValue] = useState(options ? options[0].value : '');
 
+  const { refetch: refetchEmployee } = useGetFilterEmployee(value);
+
+  const { refetch: refetchMessage } = useGetFilterMessage(value);
+
+  const handleFilter = (field: any, value: any) => {
+    if (page == 1) {
+      setValue(value);
+      refetchEmployee();
+    }
+    if (page == 2) {
+      setValue(value);
+      refetchMessage();
+    }
+    field.onChange(value);
+  };
   const { control } = useForm();
+  useEffect(() => {
+    if (page == 1) {
+      refetchEmployee();
+    }
+    if (page == 2) {
+      refetchMessage();
+    }
+  })
   return (
     <div>
       <div className="flex justify-between  items-center">
@@ -58,13 +84,15 @@ export default function Header({
                 <Controller
                   name="title"
                   control={control}
-                  defaultValue={"0"}
+                  defaultValue={options[0].value}
                   render={({ field }) => (
                     <SelectField
                       variant="secondary"
                       options={options}
                       {...field}
-                      onChange={(event) => field.onChange(event.target.value)}
+                      onChange={(event) =>
+                        handleFilter(field, event.target.value)
+                      }
                     />
                   )}
                 />
@@ -85,7 +113,7 @@ export default function Header({
               style={{ textTransform: "none" }}
               className="bg-primary-500 text-white hover:bg-primary-500 px-6 py-2  font-medium rounded-sm text-base"
             />
-      
+
             <Modal
               open={open}
               onClose={() => setOpen(!open)}

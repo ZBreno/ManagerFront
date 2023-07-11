@@ -119,7 +119,7 @@ export default function EmployeeInfo({
           <div>
             <div className="flex justify-between items-center mb-6">
               <Typography className="font-semibold text-xl ">
-                Breno Soares
+                {name}
               </Typography>
               <ButtonForm
                 onClick={handleModal}
@@ -201,7 +201,7 @@ export default function EmployeeInfo({
                     name="department"
                     control={control}
                     defaultValue={departments.findIndex(
-                      (d) => d.name === department
+                      (d: any) => d.name === department
                     )+1}
                     render={({ field }) => (
                       <SelectField

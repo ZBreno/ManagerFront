@@ -6,10 +6,17 @@ import { Typography } from "@mui/material";
 interface Message {
   title: string;
   id: number;
-  department: string;
+  department: {
+    id: number;
+    contact: string;
+    name: string;
+    location: string;
+    assignment: string;
+  } | null;
   attachment: any;
-  manager: string;
+  manager: { id: number; email: string; username: string; name: string } | null;
   read: boolean;
+  employee: number | null;
   message_type: string;
   description: string;
 }
@@ -19,15 +26,18 @@ interface MessageProps {
 }
 
 export default function Messages() {
-  const { isLoading: isLoadingMessage, data: messages } = useGetMessage();
+  const {
+    isLoading: isLoadingMessage,
+    data: messages,
+  }: { isLoading: boolean; data: Message[] | undefined } = useGetMessage();
   console.log(messages);
   const options = [
-    { text: "Justificativa de falta", value: 0 },
-    { text: "Atestado", value: 1 },
-    { text: "Aviso", value: 2 },
-    { text: "Demissão", value: 3 },
-    { text: "Promoção", value: 4 },
-    { text: "OUTRO", value: 5 },
+    { text: "Justificativa de falta", value: "JUSTIFICATIVA_DE_FALTA" },
+    { text: "Atestado", value: "ATESTADO" },
+    { text: "Aviso", value: "AVISO" },
+    { text: "Demissão", value: "DEMISSAO" },
+    { text: "Promoção", value: "PROMOCAO" },
+    { text: "Outro", value: "OUTRO" },
   ];
 
   return (
@@ -44,32 +54,23 @@ export default function Messages() {
         </div>
       ) : (
         <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2 gap-4 mt-10">
-          {messages.map(
-            (
-              {
-                id,
-                title,
-                department,
-                attachment,
-                manager,
-                read,
-                message_type,
-                description,
-              },
-              index
-            ) => (
+          {messages &&
+            messages.map((message: Message) => (
               <div>
                 <Message
-                  key={index}
-                  title={title}
-                  department={department?.name ? department?.name : "Todos"}
-                  sender={manager.name}
-                  type={message_type}
-                  id={String(id)}
+                  key={String(message.id)}
+                  title={message.title}
+                  department={
+                    message.department?.name
+                      ? message.department?.name
+                      : "Todos"
+                  }
+                  sender={message?.manager?.name && message?.manager?.name}
+                  type={message.message_type}
+                  id={String(message.id)}
                 />
               </div>
-            )
-          )}
+            ))}
         </div>
       )}
     </div>

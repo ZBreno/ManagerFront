@@ -34,9 +34,9 @@ export default function SideBar({
   const { logoutMutation, user } = useAuth();
   const router = useRouter();
   const handleLogout = () => {
-    logoutMutation.mutate(null, {
+    logoutMutation.mutate(undefined, {
       onSuccess: () => {
-        router.push('/login')
+        router.push('/login');
       },
     });
   };
@@ -62,7 +62,7 @@ export default function SideBar({
                 color="neutral.main"
                 className="font-bold text-lg text-text-500"
               >
-                {user?.name}
+                {typeof user === 'object' && user?.name ? user.name : 'Usuário Desconhecido'}
               </Typography>
 
               <Typography className="font-regular text-sm text-gray-600">

@@ -2,6 +2,9 @@ import api from "@/utils/api";
 
 export const getEmployee = () => api.get("/employee/");
 
+
+export const getFilterEmployee = (id: number) => api.get(`/employee/?department=${id}`);
+
 export const deleteEmployee = (id: string) => api.delete(`/employee/${id}/`);
 
 export const createEmployee = (data: unknown) => api.post(`/employee/`, data);

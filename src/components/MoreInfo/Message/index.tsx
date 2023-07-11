@@ -26,7 +26,7 @@ export default function MessageInfo({ handleModal, id }: IMessageInfoProps) {
       },
     });
   };
-  const optionsType = {
+  const optionsType : any = {
     JUSTIFICATIVA_DE_FALTA: "Justificativa de falta",
     AVISO: "Aviso",
     ATESTADO: "Atestado",

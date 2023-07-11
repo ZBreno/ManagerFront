@@ -6,32 +6,58 @@ import {
   AccordionDetails,
   Typography,
   Grid,
+  CircularProgress,
+  Modal,
 } from "@mui/material";
 import { useState } from "react";
 import ButtonForm from "../Button";
+import { useDeleteDepartment } from "@/hooks/department";
+import DepartmentInfo from "../MoreInfo/Department";
 
 interface AccordionsProps {
   name: string;
-  action: string;
-  head: string;
+  assignment: string;
+  head?: string;
   location: string;
   contact: string;
   index: number;
+  id: string;
 }
 export default function Accordions({
   name,
-  action,
+  assignment,
   head,
   location,
   contact,
   index,
+  id,
 }: AccordionsProps) {
   const [expanded, setExpanded] = useState<string | false>(false);
+  const [open, setOpen] = useState(false);
 
   const handleChange =
     (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
       setExpanded(isExpanded ? panel : false);
     };
+
+  const deleteDepartment = useDeleteDepartment();
+  
+  const handleModalAndAccordion = () => {
+    handleChange(`panel${index}`)
+    setOpen(!open)
+  }
+
+  const handleDeleteDepartment = () => {
+    deleteDepartment.mutate(id, {
+      onSuccess: () => {
+        console.log("certo");
+      },
+      onError: () => {
+        console.log("erro");
+      },
+    });
+  };
+
   return (
     <div className="mb-8">
       <Accordion
@@ -62,15 +88,48 @@ export default function Accordions({
                 </div>
                 <div>
                   <Typography className="font-bold">Função do setor</Typography>
-                  <Typography>{action}</Typography>
+                  <Typography>{assignment}</Typography>
                 </div>
                 <div>
                   <Typography className="font-bold">Localização</Typography>
                   <Typography>{location}</Typography>
                 </div>
                 <div className="flex gap-4 mt-10">
-                    <ButtonForm text="Excluir" style={{ textTransform: "none" }} className="text-danger-600 font-semibold hover:bg-danger-100 bg-danger-100 rounded-lg px-6 py-1"/>
-                    <ButtonForm text="Editar " style={{ textTransform: "none" }} className="text-warning-600 font-semibold hover:bg-warning-100 bg-warning-100 rounded-lg px-6 py-1"/>
+                  <ButtonForm
+                    text={
+                      deleteDepartment.isLoading ? (
+                        <CircularProgress
+                          size={12}
+                          className="text-danger-600"
+                        />
+                      ) : (
+                        "Excluir"
+                      )
+                    }
+                    style={{ textTransform: "none" }}
+                    className="text-danger-600 font-semibold hover:bg-danger-100 bg-danger-100 rounded-lg px-6 py-1"
+                    onClick={handleDeleteDepartment}
+                  />
+                  <ButtonForm
+                    text="Editar"
+                    style={{ textTransform: "none" }}
+                    className="text-warning-600 font-semibold hover:bg-warning-100 bg-warning-100 rounded-lg px-6 py-1"
+                    onClick={handleModalAndAccordion}
+                  />
+                  <Modal
+                    open={open}
+                    onClose={() => setOpen(!open)}
+                    aria-labelledby="department"
+                  >
+                    <DepartmentInfo
+                      assignment={assignment}
+                      location={location}
+                      contact={contact}
+                      id={id}
+                      name={name}
+                      handleModal={() => setOpen(!open)}
+                    />
+                  </Modal>
                 </div>
               </div>
             </Grid>
