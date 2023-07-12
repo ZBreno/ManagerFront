@@ -95,7 +95,6 @@ export default function EmployeeInfo({
       );
     }
     setCanEdit(!canEdit);
-    alert(JSON.stringify(data, null, 2))
   });
 
   const deleteEmployee = useDeleteEmployee();

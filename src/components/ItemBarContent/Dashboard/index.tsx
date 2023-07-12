@@ -8,47 +8,14 @@ import ButtonForm from "@/components/Button";
 import HeaderTable from "@/components/HeaderTable";
 import style from "./style.module.css";
 import EmployeeStatus from "@/components/EmployeeStatus";
-import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  ResponsiveContainer,
-} from "recharts";
+import { LineChart, Line, XAxis, YAxis, ResponsiveContainer } from "recharts";
+import { useGetPercent, useGetWeekCheckIn } from "@/hooks/dashboard";
 
 export default function Dashboard() {
   const [value, setValue] = useState(0);
 
-  const data = [
-    {
-      name: "Domingo",
-      checkins: 40,
-    },
-    {
-      name: "Segunda-feira",
-      checkins: 34,
-    },
-    {
-      name: "Terça-feira",
-      checkins: 56,
-    },
-    {
-      name: "Quarta-feira",
-      checkins: 29,
-    },
-    {
-      name: "Quinta-feira",
-      checkins: 40,
-    },
-    {
-      name: "Sexta-feira",
-      checkins: 46,
-    },
-    {
-      name: "Sábado",
-      checkins: 42,
-    },
-  ];
+  const { isLoading: isLoadingCheckIns, data: CheckIns } = useGetWeekCheckIn();
+  const { isLoading: isLoadingPercent, data: Percent } = useGetPercent();
 
   const employees = [
     {
@@ -83,40 +50,49 @@ export default function Dashboard() {
   ];
 
   useEffect(() => {
-    setValue(80);
-  }, []);
+    setValue(Percent?.percent);
+  }, [Percent?.percent]);
   const columns = ["Nome", "Setor", "Status", "Horário"];
   return (
     <div className="px-10 pt-10 flex flex-col lg:w-10/12 lg:fixed  xl:overflow-hidden 2xl:overflow-hidden h-full">
       <div>
         <Header title="Dashboard" subtitle="Dashboard" />
       </div>
+
       <div className="grid 2xl:grid-cols-3 md:grid-cols-1  lg:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 gap-6 mt-10 ">
-        <div className="bg-white flex justify-center items-center flex-col py-4 gap-5 rounded-lg">
-          <Typography color="text.secondary" className="text-xl text-text-500">
-            Atual porcentagem de check-in hoje
-          </Typography>
-          <div className="w-[150px] h-[150px]">
-            <div className="flex relative">
-              <CircularProgress
-                variant="determinate"
-                value={value}
-                size={150}
-                thickness={5}
-              />
-              <div className="absolute flex top-[60px] left-[55px]">
-                <Typography className="text-xl text-text-500 font-bold">
-                  {80 + "%"}
-                </Typography>
+        {isLoadingPercent ? (
+          <CircularProgress />
+        ) : (
+          <div className="bg-white flex justify-center items-center flex-col py-4 gap-5 rounded-lg">
+            <Typography
+              color="text.secondary"
+              className="text-xl text-text-500"
+            >
+              Atual porcentagem de check-in hoje
+            </Typography>
+            <div className="w-[150px] h-[150px]">
+              <div className="flex relative">
+                <CircularProgress
+                  variant="determinate"
+                  value={value}
+                  size={150}
+                  thickness={5}
+                />
+                <div className="absolute flex top-[60px] left-[55px]">
+                  <Typography className="text-xl text-text-500 font-bold">
+                    {value + "%"}
+                  </Typography>
+                </div>
               </div>
             </div>
+            <ButtonForm
+              text="Ver histórico"
+              style={{ textTransform: "none" }}
+              className="text-xl text-primary-500 font-medium hover:bg-white"
+            />
           </div>
-          <ButtonForm
-            text="Ver histórico"
-            style={{ textTransform: "none" }}
-            className="text-xl text-primary-500 font-medium hover:bg-white"
-          />
-        </div>
+        )}
+
         <div className="grid gap-4">
           <div className="bg-white row-span-2 rounded-lg p-4  ">
             <div>
@@ -167,25 +143,35 @@ export default function Dashboard() {
             </div>
           </div>
         </div>
-        <div className="bg-white w-full h-full p-4 flex flex-col gap-8 rounded-xl  lg:col-span-2 xl:col-span-2 2xl:col-span-1">
-          <Typography
-            color="text.secondary"
-            className="text-base text-center text-text-500 font-bold"
-          >
-            Check-ins na semana
-          </Typography>
-          <ResponsiveContainer width={"100%"} height={200}>
-            <LineChart data={data}>
-              <XAxis dataKey="name" style={{ backgroundColor: "red" }} />
-              <YAxis />
-              <Line
-                type="monotone"
-                dataKey="checkins"
-                stroke="#157AFE"
-                strokeWidth={2}
-              />
-            </LineChart>
-          </ResponsiveContainer>
+        <div
+          className={`bg-white rounded-xl bg-white w-full h-full px-4 pt-4 flex flex-col gap-8 rounded-xl  lg:col-span-2 xl:col-span-2 2xl:col-span-1 ${
+            isLoadingCheckIns && "flex items-center justify-center"
+          }`}
+        >
+          {isLoadingCheckIns ? (
+            <CircularProgress />
+          ) : (
+            <div>
+              <Typography
+                color="text.secondary"
+                className="text-base text-center text-text-500 font-bold"
+              >
+                Check-ins na semana
+              </Typography>
+              <ResponsiveContainer width={"100%"} height={250}>
+                <LineChart data={CheckIns}>
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Line
+                    type="monotone"
+                    dataKey="checkIns"
+                    stroke="#157AFE"
+                    strokeWidth={2}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
+            </div>
+          )}
         </div>
       </div>
 

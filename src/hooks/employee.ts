@@ -10,12 +10,24 @@ import { useCallback } from "react";
 
 export const QueryKeys = {
   all: ["employees"] as const,
+  unChecked: ["unChecked"] as const,
   item: (employeeId: string) => [...QueryKeys.all, employeeId] as const,
+
 };
 
 export const useGetEmployee = () => {
   return useQuery({
     queryKey: QueryKeys.all,
+    queryFn: async () => {
+      const response: any = await getEmployee();
+      return response.data;
+    },
+  });
+};
+
+export const useGetEmployeeUnChecked = () => {
+  return useQuery({
+    queryKey: QueryKeys.unChecked,
     queryFn: async () => {
       const response: any = await getEmployee();
       return response.data;

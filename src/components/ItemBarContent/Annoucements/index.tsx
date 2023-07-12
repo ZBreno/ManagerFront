@@ -175,7 +175,7 @@ export default function Annoucements() {
   return (
     <div className="px-10 mt-10">
       <Header title="Anúncios" subtitle="Anúncios"/>
-      <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2 sm:grid-cols-2 gap-4 mt-10">
+      <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2 gap-4 mt-10">
         {annoucements.map(({companyName, image,rating, quantity_rating, tags, city}, index) => (
           <Annoucement companyName={companyName} image={image} rating={rating} quantity_rating={quantity_rating} tags={tags} city={city}/>
         ))}
