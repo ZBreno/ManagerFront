@@ -13,6 +13,7 @@ import { useState } from "react";
 import ButtonForm from "../Button";
 import { useDeleteDepartment } from "@/hooks/department";
 import DepartmentInfo from "../MoreInfo/Department";
+import { useMessage } from "@/hooks/useMessage";
 
 interface AccordionsProps {
   name: string;
@@ -21,6 +22,7 @@ interface AccordionsProps {
   location: string;
   contact: string;
   index: number;
+ 
   id: string;
 }
 export default function Accordions({
@@ -46,14 +48,24 @@ export default function Accordions({
     handleChange(`panel${index}`)
     setOpen(!open)
   }
-
+  const {setMessage} = useMessage()
   const handleDeleteDepartment = () => {
     deleteDepartment.mutate(id, {
       onSuccess: () => {
-        console.log("certo");
+        setMessage({
+          screen: "Department",
+          message: "Departamento exluído com sucesso.",
+          type: "success",
+        });
+        handleModal();
       },
-      onError: () => {
-        console.log("erro");
+      onError: (err) => {
+        setMessage({
+          screen: "Department",
+          message: "A ação não pôde ser concluída.",
+          type: "error",
+        });
+        handleModal();
       },
     });
   };
@@ -137,7 +149,7 @@ export default function Accordions({
               <div className="flex flex-col gap-4">
                 <div>
                   <Typography className="font-bold">Responsável</Typography>
-                  <Typography>{head}</Typography>
+                  <Typography>{head ? head : "Ninguem"}</Typography>
                 </div>
                 <div>
                   <Typography className="font-bold">Contato</Typography>

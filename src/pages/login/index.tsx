@@ -18,7 +18,7 @@ import { useRouter } from "next/router";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
 interface IFormData {
-  email: string;
+  username: string;
   password: string;
 }
 
@@ -48,7 +48,7 @@ export default function Login() {
 
   const schema = yup
     .object({
-      email: yup
+      username: yup
         .string()
         .email("E-mail inválido")
         .required("Este campo é obrigatório"),
@@ -123,11 +123,11 @@ export default function Login() {
             >
               <div>
                 <Controller
-                  name="email"
+                  name="username"
                   control={control}
                   render={({ field }) => (
                     <InputField
-                      variant={`${errors.email?.message ? "error" : "primary"}`}
+                      variant={`${errors.username?.message ? "error" : "primary"}`}
                       placeholder="Insira seu e-mail"
                       label="E-mail"
                       {...field}
@@ -143,7 +143,7 @@ export default function Login() {
                   )}
                 />
                 <Typography className="text-danger-600 mt-1">
-                  {errors.email?.message}
+                  {errors.username?.message}
                 </Typography>
               </div>
               <div>

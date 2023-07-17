@@ -10,19 +10,20 @@ import { useGetDepartment } from "@/hooks/department";
 import { useGetEmployee } from "@/hooks/employee";
 import { useCreateMessage } from "@/hooks/message";
 import { useState } from "react";
+import { useMessage } from "@/hooks/useMessage";
 
 interface IMessageFormProps {
   handleModal: () => void;
 }
 
-interface IFormData {
-  title: string;
-  message_type: string;
-  department: number;
-  description: string;
-  attachment: any;
-  employee: number;
-}
+// interface IFormData {
+//   title: string;
+//   message_type: string;
+//   department: number;
+//   description: string;
+//   attachment?: any;
+//   employee: number;
+// }
 
 export default function MessageForm({ handleModal }: IMessageFormProps) {
   const optionsTypeMessage = [
@@ -34,8 +35,6 @@ export default function MessageForm({ handleModal }: IMessageFormProps) {
     { text: "Outro", value: "OUTRO" },
   ];
 
-
-  
   const schema = yup
     .object({
       title: yup.string().required("Este campo é obrigatório"),
@@ -54,21 +53,20 @@ export default function MessageForm({ handleModal }: IMessageFormProps) {
   const {
     control,
     handleSubmit,
-    setValue,
     formState: { errors },
-  } = useForm<IFormData>({
+  } = useForm({
     resolver: yupResolver(schema),
   });
 
-  const [selectedFile, setSelectedFile] = useState()
+  const [selectedFile, setSelectedFile] = useState();
 
   const { isLoading: isLoadingDepartment, data: departments } =
     useGetDepartment();
-
+  const { setMessage } = useMessage();
   const { isLoading: isLoadingEmployee, data: employees } = useGetEmployee();
   const createMessage = useCreateMessage();
-  const onSubmit = handleSubmit((data) =>{
-    data.attachment = selectedFile
+  const onSubmit = handleSubmit((data) => {
+    data.attachment = selectedFile;
     // var bodyFormData = new FormData();
 
     // bodyFormData.append('attachment', data.attachment)
@@ -76,14 +74,25 @@ export default function MessageForm({ handleModal }: IMessageFormProps) {
     // data.attachment = bodyFormData
     createMessage.mutate(data, {
       onSuccess: () => {
-        alert("deu certo");
+        setMessage({
+          screen: "Message",
+          message: "Mensagem criada com sucesso",
+          type: "success",
+        });
+        handleModal();
       },
-      onError: () => {
-        alert("deu errado");
+
+      onError: (err) => {
+        setMessage({
+          screen: "Message",
+          message: "A ação não pôde ser concluída",
+          type: "error",
+        });
+        handleModal();
       },
-    })
+    });
     // alert(JSON.stringify(data, null, 2))
-  })
+  });
   return (
     <form onSubmit={onSubmit}>
       <div className="bg-white w-[35%] min-w-[450px] rounded-lg -translate-x-1/2 -translate-y-2/4 absolute top-[50%] left-[50%] p-6">
@@ -140,9 +149,6 @@ export default function MessageForm({ handleModal }: IMessageFormProps) {
                     />
                   )}
                 />
-                <Typography className="text-danger-600 mt-1">
-                  {errors.attachment?.message}
-                </Typography>
               </div>
               <div>
                 <Controller

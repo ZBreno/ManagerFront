@@ -27,11 +27,11 @@ export const useGetMessageId = (messageId: string) => {
   });
 };
 
-export const useGetFilterMessage = (id?: any) => {
+export const useGetFilterMessage = ({id, name}: {id: string, name: string;}) => {
   const fetchData = useCallback(async () => {
-    const response: any = await getFilterMessage(id);
+    const response: any = await getFilterMessage({id, name});
     return response.data;
-  }, [id]);
+  }, [id, name]);
 
   return useQuery({
     queryKey: QueryKeys.all,

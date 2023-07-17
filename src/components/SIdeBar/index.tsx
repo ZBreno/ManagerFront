@@ -14,6 +14,7 @@ import { getAuthToken } from "@/utils/authToken";
 import { useEffect } from "react";
 import { logout } from "@/services/auth";
 import LoadingContainer from "../LoadingContainer";
+import { useEmployee } from "@/hooks/useEmployee";
 
 interface Option {
   name: string;
@@ -22,26 +23,27 @@ interface Option {
 
 interface SideBarProps {
   options: Option[];
-  currentPage: number;
-  onPress: (value: number) => void;
+  currentPage?: number;
+  onPress?: (value: number) => void;
+  employees?: boolean;
 }
 
 export default function SideBar({
   options,
   onPress,
   currentPage,
+  employees,
 }: SideBarProps) {
   const { logoutMutation, user } = useAuth();
   const router = useRouter();
   const handleLogout = () => {
     logoutMutation.mutate(undefined, {
       onSuccess: () => {
-        router.push('/login');
+        router.push("/login");
       },
     });
   };
- 
-  
+  const { employee } = useEmployee();
   return (
     <div
       className={`${
@@ -62,11 +64,15 @@ export default function SideBar({
                 color="neutral.main"
                 className="font-bold text-lg text-text-500"
               >
-                {typeof user === 'object' && user?.name ? user.name : 'Usuário Desconhecido'}
+                {employees
+                  ? employee?.name
+                  : typeof user === "object" && user?.name
+                  ? user.name
+                  : "Usuário Desconhecido"}
               </Typography>
 
               <Typography className="font-regular text-sm text-gray-600">
-                Administrador
+                {!employees ? " Empresa" : "Funcionário"}
               </Typography>
             </div>
           </div>
@@ -75,23 +81,27 @@ export default function SideBar({
               {options.map(({ name, icon }, index) => (
                 <ItemBar
                   key={name}
-                  onClick={() => onPress(index)}
+                  onClick={() => {
+                    onPress && onPress(index);
+                  }}
                   text={name}
                   icon={icon}
                   isSelected={currentPage === index}
                 />
               ))}
             </div>
-            <div className="ml-5 mr-5 mb-10 flex items-center cursor-pointer">
-              <Logout className="text-danger-600" />
-              <ButtonForm
-                disableRipple={true}
-                onClick={handleLogout}
-                className="text-danger-600 font-poppins ml-10 text-2xl hover:bg-white"
-                style={{ textTransform: "none" }}
-                text="Sair"
-              />
-            </div>
+            {options[0].name != "Terminal de ponto" && (
+              <div className="ml-5 mr-5 mb-10 flex items-center cursor-pointer">
+                <Logout className="text-danger-600" />
+                <ButtonForm
+                  disableRipple={true}
+                  onClick={handleLogout}
+                  className="text-danger-600 font-poppins ml-10 text-2xl hover:bg-white"
+                  style={{ textTransform: "none" }}
+                  text="Sair"
+                />
+              </div>
+            )}
           </div>
         </div>
       </nav>

@@ -4,6 +4,7 @@ import ButtonForm from "../Button";
 import { useState } from "react";
 import { useDeleteMessage } from "@/hooks/message";
 import MessageInfo from "../MoreInfo/Message";
+import { useMessage } from "@/hooks/useMessage";
 
 interface MessageProps {
   title: string;
@@ -72,14 +73,26 @@ export default function Message({
   };
   const [openModal, setOpenModal] = useState(false);
   const deleteMessage = useDeleteMessage();
+  const { setMessage } = useMessage();
+
 
   const handleDeleteMessage = () => {
     deleteMessage.mutate(id, {
       onSuccess: () => {
-        console.log("apagou");
+        setMessage({
+          screen: "Message",
+          message: "Mensagem exluída com sucesso.",
+          type: "success",
+        });
+        setOpenModal(!open);
       },
       onError: (err) => {
-        alert(err);
+        setMessage({
+          screen: "Message",
+          message: "A ação não pôde ser concluída.",
+          type: "error",
+        });
+        setOpenModal(!open);
       },
     });
     setAnchorEl(null);
@@ -127,7 +140,9 @@ export default function Message({
         </div>
 
         <div>
-          <Typography className={`font-semibold text-xs`}>{sender ? sender : '-'}</Typography>
+          <Typography className={`font-semibold text-xs`}>
+            {sender ? sender : "-"}
+          </Typography>
           <Typography className="font-bold text-xl">{department}</Typography>
         </div>
         <div className={`flex justify-end`}>
@@ -142,7 +157,10 @@ export default function Message({
             onClose={() => setOpenModal(!openModal)}
             aria-labelledby="title"
           >
-            <MessageInfo id={String(id)} handleModal={() => setOpenModal(!openModal)}/>
+            <MessageInfo
+              id={String(id)}
+              handleModal={() => setOpenModal(!openModal)}
+            />
           </Modal>
         </div>
       </div>

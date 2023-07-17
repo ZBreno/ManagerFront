@@ -8,18 +8,20 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useGetEmployee } from "@/hooks/employee";
 import { useCreateDepartment } from "@/hooks/department";
+import { useMessage } from "@/hooks/useMessage";
+import { useAuth } from "@/hooks/useAuth";
 
 interface IDepartmentFormProps {
   handleModal: () => void;
 }
 
-interface IFormData {
-  name: string;
-  assignment: string;
-  contact: string;
-  // head: number;
-  location: string;
-}
+// interface IFormData {
+//   name: string;
+//   assignment: string;
+//   contact: string;
+//   head: number;
+//   location: string;
+// }
 
 export default function DepartmentForm({ handleModal }: IDepartmentFormProps) {
   const optionsEmployees = [
@@ -31,6 +33,7 @@ export default function DepartmentForm({ handleModal }: IDepartmentFormProps) {
     { text: "Outro", value: 5 },
   ];
   const { isLoading: isLoadingEmployee, data: employees } = useGetEmployee();
+  const { user } = useAuth();
   const schema = yup
     .object({
       name: yup.string().required("Este campo é obrigatório"),
@@ -39,7 +42,7 @@ export default function DepartmentForm({ handleModal }: IDepartmentFormProps) {
         .string()
         .email("Email inválido")
         .required("Este campo é obrigatório"),
-      // head: yup.number().required("Este campo é obrigatório"),
+      head: yup.number(),
       location: yup.string().required("Este campo é obrigatório"),
     })
     .required();
@@ -48,21 +51,32 @@ export default function DepartmentForm({ handleModal }: IDepartmentFormProps) {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormData>({
+  } = useForm({
     resolver: yupResolver(schema),
   });
   const createDepartment = useCreateDepartment();
-
-  const onSubmit = handleSubmit((data) =>
+  const { setMessage } = useMessage();
+  const onSubmit = handleSubmit((data) => {
+    data.head = user;
     createDepartment.mutate(data, {
       onSuccess: () => {
+        setMessage({
+          screen: "Department",
+          message: "Departamento criado com sucesso",
+          type: "success",
+        });
         handleModal();
       },
       onError: (err) => {
-        alert(err)
-      }
-    })
-  );
+        setMessage({
+          screen: "Department",
+          message: "A ação não pôde ser concluída",
+          type: "error",
+        });
+        handleModal();
+      },
+    });
+  });
   return (
     <form onSubmit={onSubmit}>
       <div className="bg-white w-[35%] min-w-[450px] rounded-lg -translate-x-1/2 -translate-y-2/4 absolute top-[50%] left-[50%] p-6">
@@ -197,7 +211,7 @@ export default function DepartmentForm({ handleModal }: IDepartmentFormProps) {
               <ButtonForm
                 style={{ textTransform: "none" }}
                 text={
-                  createDepartment.isLoading? (
+                  createDepartment.isLoading ? (
                     <CircularProgress size={24} className="text-success-600" />
                   ) : (
                     "Criar departamento"

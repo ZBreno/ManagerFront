@@ -2,7 +2,7 @@ import api from "@/utils/api";
 
 export const getMessage = () => api.get("/message/");
 
-export const getFilterMessage = (id: number) => api.get(`/message/?type=${id}`);
+export const getFilterMessage = ({id, name}: {id?: string; name?: string;}) => api.get(`/message/?type=${id}&name=${name}`);
 
 export const deleteMessage = (id: string) => api.delete(`/message/${id}/`);
 

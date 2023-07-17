@@ -10,6 +10,7 @@ import { useDeleteEmployee, usePatchEmployee } from "@/hooks/employee";
 import { useEffect, useState } from "react";
 import RadioField from "@/components/Radio";
 import { useGetDepartment } from "@/hooks/department";
+import { useMessage } from "@/hooks/useMessage";
 
 interface IEmployeeInfoProps {
   id: string;
@@ -47,11 +48,8 @@ export default function EmployeeInfo({
   ];
   const [canEdit, setCanEdit] = useState(true);
 
-
   const { isLoading: isLoadingDepartment, data: departments } =
     useGetDepartment();
-
-  
 
   const schema = yup
     .object({
@@ -61,8 +59,7 @@ export default function EmployeeInfo({
         .email("E-mail inválido")
         .required("Este campo é obrigatório"),
       birthDate: yup.string().required("Este campo é obrigatório"),
-      department: yup
-        .number(),
+      department: yup.number(),
       assignment: yup.string().required("Este campo é obrigatório"),
       head: yup.string().required("Este campo é obrigatório"),
       phone: yup.string().required("Este campo é obrigatório"),
@@ -79,34 +76,62 @@ export default function EmployeeInfo({
   });
 
   const patchEmployee = usePatchEmployee();
-
+  const { setMessage } = useMessage();
   const onSubmit = handleSubmit((data) => {
     if (!canEdit) {
       patchEmployee.mutate(
         { id: id, data: data },
         {
           onSuccess: () => {
-            console.log("deu certo");
+            setMessage({
+              screen: "Employee",
+              message: "Funcionário editado com sucesso.",
+              type: "success",
+            });
+            handleModal();
           },
-          onError: () => {
-            console.log("deu errado");
+          onError: (err) => {
+            setMessage({
+              screen: "Employee",
+              message: "A ação não pôde ser concluída.",
+              type: "error",
+            });
+            handleModal();
           },
         }
       );
     }
     setCanEdit(!canEdit);
   });
+  const findDepartment = () => {
+    const element = departments.find((d: any) => d.name == department);
 
+    if(element){
+      return element.id
+    }
+    
+  };
   const deleteEmployee = useDeleteEmployee();
   const handleDeleteEmployee = () => {
     deleteEmployee.mutate(id, {
       onSuccess: () => {
+        setMessage({
+          screen: "Employee",
+          message: "Funcionário exluído com sucesso.",
+          type: "success",
+        });
+        handleModal();
+      },
+      onError: (err) => {
+        setMessage({
+          screen: "Employee",
+          message: "A ação não pôde ser concluída.",
+          type: "error",
+        });
         handleModal();
       },
     });
   };
-  
-
   return (
     <form onSubmit={onSubmit}>
       <div className="bg-white w-[40%] min-w-[450px] rounded-lg -translate-x-1/2 -translate-y-2/4 absolute top-[50%] left-[50%] p-6">
@@ -117,9 +142,7 @@ export default function EmployeeInfo({
         ) : (
           <div>
             <div className="flex justify-between items-center mb-6">
-              <Typography className="font-semibold text-xl ">
-                {name}
-              </Typography>
+              <Typography className="font-semibold text-xl ">{name}</Typography>
               <ButtonForm
                 onClick={handleModal}
                 className="hover:bg-opacity-0 hover:bg-white p-0 min-w-[24px] "
@@ -199,9 +222,7 @@ export default function EmployeeInfo({
                   <Controller
                     name="department"
                     control={control}
-                    defaultValue={departments.findIndex(
-                      (d: any) => d.name === department
-                    )+1}
+                    defaultValue={findDepartment()}
                     render={({ field }) => (
                       <SelectField
                         variant={`${

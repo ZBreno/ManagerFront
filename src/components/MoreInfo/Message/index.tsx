@@ -10,6 +10,7 @@ import { useDeleteEmployee, usePatchEmployee } from "@/hooks/employee";
 import { useState } from "react";
 import { useDeleteMessage, useGetMessageId } from "@/hooks/message";
 import Link from "next/link";
+import { useMessage } from "@/hooks/useMessage";
 
 interface IMessageInfoProps {
   id: string;
@@ -18,10 +19,23 @@ interface IMessageInfoProps {
 
 export default function MessageInfo({ handleModal, id }: IMessageInfoProps) {
   const deleteMessage = useDeleteMessage();
-
+  const {setMessage} = useMessage()
   const handleDeleteMessage = () => {
     deleteMessage.mutate(id, {
       onSuccess: () => {
+        setMessage({
+          screen: "Message",
+          message: "Mensagem exluída com sucesso.",
+          type: "success",
+        });
+        handleModal();
+      },
+      onError: (err) => {
+        setMessage({
+          screen: "Message",
+          message: "A ação não pôde ser concluída.",
+          type: "error",
+        });
         handleModal();
       },
     });
@@ -63,14 +77,15 @@ export default function MessageInfo({ handleModal, id }: IMessageInfoProps) {
               </div>
               <div className="flex flex-col flex-wrap">
                 <Typography className="font-bold">Anexo</Typography>
-                <Link
+                {message.attachment ?<Link
                   href={message.attachment}
                   className="text-primary-500"
                   style={{ wordBreak: "break-all" }}
                   target="_blank"
                 >
                   {message.attachment}
-                </Link>
+                </Link> : <Typography>Nenhum anexo enviado</Typography> }
+                
               </div>
             </div>
             <div className="grid grid-cols-2 gap-4">

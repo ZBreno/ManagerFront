@@ -33,43 +33,38 @@ export default function Header({
   page,
 }: HeaderProps) {
   const [open, setOpen] = useState(false);
-  const handleModal = () => {
-    setOpen(!open);
-  };
+  const [name, setName] = useState("");
+  const [selected, setSelected] = useState(
+    options && options.length > 0 ? options[0].value : ""
+  );
   const forms = [
     { page: <EmployeeForm handleModal={() => setOpen(!open)} /> },
     { page: <MessageForm handleModal={() => setOpen(!open)} /> },
     { page: <DepartmentForm handleModal={() => setOpen(!open)} /> },
   ];
-  const [value, setValue] = useState(options ? options[0].value : '');
+  console.log(options);
+  const optionsValue = {
+    id: options && options.length > 0 ? options[0].value : "",
+    name: name,
+  };
+  const [value, setValue] = useState(optionsValue);
 
   const { refetch: refetchEmployee } = useGetFilterEmployee(value);
 
   const { refetch: refetchMessage } = useGetFilterMessage(value);
 
-  const handleFilter = (field: any, value: any) => {
-    if (page == 1) {
-      setValue(value);
-      refetchEmployee();
-    }
-    if (page == 2) {
-      setValue(value);
-      refetchMessage();
-    }
-    field.onChange(value);
-  };
   const { control } = useForm();
   useEffect(() => {
-    if (page == 1) {
+    if (page == 1 && optionsValue) {
       refetchEmployee();
     }
-    if (page == 2) {
+    if (page == 2 && optionsValue) {
       refetchMessage();
     }
-  })
+  }, [value]);
   return (
     <div>
-      <div className="flex justify-between  items-center">
+      <div className="flex justify-between items-center">
         <div className="flex flex-col">
           <Typography className="text-primary-500 text-3xl font-bold">
             {title}
@@ -84,14 +79,15 @@ export default function Header({
                 <Controller
                   name="title"
                   control={control}
-                  defaultValue={options[0].value}
+                  defaultValue={value.id}
                   render={({ field }) => (
                     <SelectField
                       variant="secondary"
                       options={options}
                       {...field}
+                      
                       onChange={(event) =>
-                        handleFilter(field, event.target.value)
+                        {setValue({ id: event.target.value, name: value.name }), field.onChange(event.target.value)}
                       }
                     />
                   )}
@@ -129,7 +125,7 @@ export default function Header({
           <InputField
             variant="search"
             placeholder={`Busque aqui suas ${title.toLowerCase()}`}
-            onChange={() => alert("meu deus, deu certo")}
+            onChange={(e) => setValue({ id: value.id, name: e.target.value })}
             InputProps={{
               endAdornment: (
                 <Search

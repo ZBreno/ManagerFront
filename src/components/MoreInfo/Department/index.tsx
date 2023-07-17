@@ -6,6 +6,7 @@ import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { usePatchDepartment } from "@/hooks/department";
+import { useMessage } from "@/hooks/useMessage";
 
 interface IEmployeeInfoProps {
   id: string;
@@ -45,20 +46,31 @@ export default function DepartmentInfo({
   });
 
   const patchDepartment = usePatchDepartment();
-
+  const {setMessage} = useMessage()
   const onSubmit = handleSubmit((data) => {
     patchDepartment.mutate(
       { id: id, data: data },
       {
+        
         onSuccess: () => {
-          console.log("deu certo");
+          setMessage({
+            screen: "Department",
+            message: "Departamento editado com sucesso.",
+            type: "success",
+          });
+          
+          handleModal();
         },
-        onError: () => {
-          console.log("deu errado");
+        onError: (err) => {
+          setMessage({
+            screen: "Department",
+            message: "A ação não pôde ser concluída.",
+            type: "error",
+          });
+          handleModal();
         },
       }
     );
-    handleModal()
   });
 
   return (

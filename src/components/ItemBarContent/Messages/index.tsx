@@ -2,7 +2,8 @@ import { useGetMessage } from "@/hooks/message";
 import Header from "../../Header";
 import Message from "@/components/Message";
 import CircularProgress from "@mui/material/CircularProgress";
-import { Typography } from "@mui/material";
+import { Alert, Typography } from "@mui/material";
+import { useMessage } from "@/hooks/useMessage";
 interface Message {
   title: string;
   id: number;
@@ -30,7 +31,6 @@ export default function Messages() {
     isLoading: isLoadingMessage,
     data: messages,
   }: { isLoading: boolean; data: Message[] | undefined } = useGetMessage();
-  console.log(messages);
   const options = [
     { text: "Justificativa de falta", value: "JUSTIFICATIVA_DE_FALTA" },
     { text: "Atestado", value: "ATESTADO" },
@@ -39,7 +39,7 @@ export default function Messages() {
     { text: "Promoção", value: "PROMOCAO" },
     { text: "Outro", value: "OUTRO" },
   ];
-
+  const {message} = useMessage()
   return (
     <div className="px-10 mt-10">
       <Header
@@ -48,17 +48,24 @@ export default function Messages() {
         options={options}
         page={2}
       />
+      {message && message?.screen == "Message" && (
+          <Alert className="mb-5 mt-5" severity={message?.type}>
+            {message?.message}
+          </Alert>
+        )}
       {isLoadingMessage ? (
         <div className="flex justify-center items-center mt-10">
           <CircularProgress />
         </div>
       ) : (
+        
         <div className="grid lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 sm:grid-cols-2 gap-4 mt-10">
+          
           {messages &&
             messages.map((message: Message) => (
               <div>
                 <Message
-                  key={String(message.id)}
+                  key={message.id}
                   title={message.title}
                   department={
                     message.department?.name

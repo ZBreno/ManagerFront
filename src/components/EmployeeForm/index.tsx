@@ -9,21 +9,22 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import RadioField from "../Radio";
 import { useCreateEmployee } from "@/hooks/employee";
 import { useGetDepartment } from "@/hooks/department";
+import { useMessage } from "@/hooks/useMessage";
 
 interface EmployeeFormProps {
   handleModal: () => void;
 }
 
-interface IFormData {
-  name: string;
-  email: string;
-  birth_date: string;
-  department: number;
-  assignment: string;
-  fingerPrint: string;
-  phone: string;
-  head: string;
-}
+// interface IFormData {
+//   name: string;
+//   email: string;
+//   birth_date: string;
+//   department: number;
+//   assignment: string;
+//   fingerPrint: string;
+//   phone: string;
+//   head: string;
+// }
 
 export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
   const { isLoading: isLoadingDepartment, data: departments } =
@@ -36,7 +37,7 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
         .email("E-mail inválido")
         .required("Este campo é obrigatório"),
       birth_date: yup.string().required("Este campo é obrigatório"),
-      department: yup.number(),
+      department: yup.number().nullable(),
       assignment: yup.string().required("Este campo é obrigatório"),
       fingerPrint: yup.string().required("Este campo é obrigatório"),
       phone: yup.string().required("Este campo é obrigatório"),
@@ -48,24 +49,35 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
     control,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormData>({
+  } = useForm({
     resolver: yupResolver(schema),
   });
   const optionsRadio = [
     { text: "Sim", value: "SIM" },
     { text: "Não", value: "NAO" },
   ];
-
+  const { setMessage } = useMessage();
   const createEmployee = useCreateEmployee();
-  const onSubmit = handleSubmit((data) =>
+  const onSubmit = handleSubmit((data) => {
     createEmployee.mutate(data, {
       onSuccess: () => {
-        alert("deu certo");
+        setMessage({
+          screen: "Employee",
+          message: "Funcionário criado com sucesso",
+          type: "success",
+        });
+        handleModal();
       },
-      onError: (err) => alert(err),
-    })
-  );
-
+      onError: (err) => {
+        setMessage({
+          screen: "Employee",
+          message: "A ação não pôde ser concluída",
+          type: "error",
+        });
+        handleModal();
+      },
+    });
+  });
 
   return (
     <form onSubmit={onSubmit}>
@@ -153,7 +165,6 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
                   <Controller
                     name="department"
                     control={control}
-                    defaultValue={departments[0].id}
                     render={({ field }) => (
                       <SelectField
                         variant={`${

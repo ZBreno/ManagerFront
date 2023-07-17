@@ -6,7 +6,7 @@ interface EmployeeStatusProps {
   image: string;
   name: string;
   department: string;
-  checkin?: string;
+  checkin?: string | boolean;
   bg: boolean;
 }
 
@@ -21,8 +21,8 @@ export default function EmployeeStatus({
   return (
     <Grid container className={`py-4 px-4 items-center ${bg && "bg-white"}`}>
       <Grid item xs={3}>
-        <div className="flex items-center">
-          <Image src={image} alt="foto do funcionario" width={70} height={35} className="rounded-lg object-cover h-16 mr-2"/>
+        <div className="flex items-center justify-center">
+
           <Typography className="font-medium text-center text-base text-text-500">
             {name}
           </Typography>

@@ -1,9 +1,11 @@
-import { CircularProgress, Grid, Typography } from "@mui/material";
+import { Alert, CircularProgress, Grid, Typography } from "@mui/material";
 import Header from "../../Header";
 import Employee from "@/components/Employee";
 import HeaderTable from "@/components/HeaderTable";
 import { useGetEmployee } from "@/hooks/employee";
 import { useGetDepartment } from "@/hooks/department";
+import { useMessage } from "@/hooks/useMessage";
+import { useEffect } from "react";
 
 export default function Employees() {
   interface Employee {
@@ -29,11 +31,6 @@ export default function Employees() {
     phone: string;
     bg: boolean;
   }
-  const options = [
-    { text: "Rercusos Humanos(RH)", value: 0 },
-    { text: "Almoxarifado", value: 1 },
-    { text: "Administrativo", value: 2 },
-  ];
 
   const {
     isLoading: isLoadingEmployee,
@@ -42,7 +39,9 @@ export default function Employees() {
 
   const { isLoading: isLoadingDepartment, data: departments } =
     useGetDepartment();
-    
+  const { message } = useMessage();
+
+  
   const columns = ["Nome", "Setor", "Ultimo check-in", "Detalhes"];
   return (
     <div className="px-10 mt-10">
@@ -54,12 +53,12 @@ export default function Employees() {
         <Header
           title="Funcionários"
           subtitle="Funcionários"
-          options={departments.map(
+          options={departments ? departments.map(
             ({ id, name }: { id: number; name: string }) => ({
               value: id,
               text: name,
             })
-          )}
+          ) : undefined}
           page={1}
         />
       )}
@@ -70,6 +69,12 @@ export default function Employees() {
         </div>
       ) : (
         <div className="mt-10">
+          {message && message?.screen == "Employee" && (
+            <Alert className="mb-5" severity={message?.type}>
+              {message?.message}
+            </Alert>
+          )}
+
           <HeaderTable columns={columns} />
           <div>
             {employees &&
