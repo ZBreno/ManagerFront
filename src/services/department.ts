@@ -5,6 +5,9 @@ export const getDepartment = () => api.get("/department/");
 export const deleteDepartment = (id: string) =>
   api.delete(`/department/${id}/`);
 
+  export const getFilterDepartment = (name?: string) => api.get(`/department/?name=${name}`);
+
+
 export const createDepartment = (data: unknown) =>
   api.post(`/department/`, data);
 

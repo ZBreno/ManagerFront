@@ -31,7 +31,7 @@ export default function Dashboard() {
   return (
     <div className="px-10 pt-10 flex flex-col lg:w-10/12 lg:fixed  xl:overflow-hidden 2xl:overflow-hidden h-full">
       <div>
-        <Header title="Dashboard" subtitle="Dashboard" />
+        <Header title="Dashboard" subtitle="Dashboard" page={0} />
       </div>
 
       <div className="grid 2xl:grid-cols-3 md:grid-cols-1  lg:grid-cols-2 sm:grid-cols-1 xl:grid-cols-2 gap-6 mt-10 ">

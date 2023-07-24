@@ -10,10 +10,11 @@ export default function Tag({ icon, name }: TagProps) {
   return (
     <div className="flex items-center border border-text-500 rounded-lg px-2 py-1">
       <div>
-        <img
+        <Image
           alt="icone da tag"
-          src={icon}
-          
+          src={`http://127.0.0.1:8001${icon}`}
+          height={20} 
+          width={20}
         />
       </div>
       <Typography className="text-[10px] ml-2">{name}</Typography>

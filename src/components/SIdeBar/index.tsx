@@ -44,6 +44,9 @@ export default function SideBar({
     });
   };
   const { employee } = useEmployee();
+  useEffect(() => {
+    console.log(user,'dssadas')
+  }, [])
   return (
     <div
       className={`${

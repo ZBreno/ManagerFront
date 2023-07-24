@@ -165,6 +165,7 @@ export default function EmployeeForm({ handleModal }: EmployeeFormProps) {
                   <Controller
                     name="department"
                     control={control}
+                    defaultValue={departments[0].id}
                     render={({ field }) => (
                       <SelectField
                         variant={`${

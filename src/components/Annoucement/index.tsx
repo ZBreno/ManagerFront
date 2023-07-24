@@ -5,15 +5,17 @@ import Tag from "../Tag";
 
 interface Tags {
   icon: string;
-  name: string;
+  tag_name: string;
 }
 interface AnnoucementProps {
   companyName: string;
   image: string;
   rating: number;
   quantity_rating: number;
-  tags: Tags[];
+  tags: Tags;
   city: string;
+  id: number;
+  companyImage: string;
 }
 
 export default function Annoucement({
@@ -23,13 +25,17 @@ export default function Annoucement({
   quantity_rating,
   tags,
   city,
+  id,
+  companyImage,
 }: AnnoucementProps) {
+  const token = localStorage.getItem("auth-token-dve");
+
   return (
     <div className="border border-gray-400 border-opacity-50 rounded-lg ">
       <div className="relative min-w-fit h-28">
         <Image
           alt="imagem de anuncio"
-          src={image}
+          src={`http://127.0.0.1:8001${image}`}
           fill
           className="rounded-t-lg object-cover "
         />
@@ -38,7 +44,7 @@ export default function Annoucement({
         <div className=" relative flex justify-end">
           <Avatar
             alt="Remy Sharp"
-            src={"./assets/Profile.jpg"}
+            src={`http://127.0.0.1:8001${companyImage}`}
             sx={{
               width: 50,
               height: 50,
@@ -75,17 +81,19 @@ export default function Annoucement({
           </div>
         </div>
         <div className="flex flex-wrap gap-2 mt-3">
-          {tags.map(({ icon, name }, index) => (
-            <Tag key={index} name={name} icon={icon} />
+          {tags.map(({ icon, tag_name }, index) => (
+            <Tag key={index} name={tag_name} icon={icon} />
           ))}
         </div>
         <div className="flex justify-between mt-4 mb-4 items-center">
           <Typography className="text-xs font-bold">{city}</Typography>
-          <ButtonForm
-            text="Ver mais"
-            style={{ textTransform: "none", }}
-            className="bg-primary-500 hover:bg-primary-500 text-white rounded-lg px-2 py-1 text-[10px]"
-          />
+          <a
+            target="_blank"
+            href={`http://localhost:3001/announcementDetail/${id}?token=${token}`}
+            className="font-poppins flex items-center bg-primary-500 text-white rounded-lg text-[10px] px-2 py-1"
+          >
+            Ver mais
+          </a>
         </div>
       </div>
     </div>

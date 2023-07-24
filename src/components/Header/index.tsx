@@ -14,6 +14,8 @@ import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { useGetFilterEmployee } from "@/hooks/employee";
 import { useGetFilterMessage } from "@/hooks/message";
+import { useGetFilterDepartment } from "@/hooks/department";
+import Link from "next/link";
 
 interface Option {
   text: string;
@@ -48,10 +50,12 @@ export default function Header({
     name: name,
   };
   const [value, setValue] = useState(optionsValue);
+  const [valueDepartment, setValueDepartment] = useState("");
 
   const { refetch: refetchEmployee } = useGetFilterEmployee(value);
-
   const { refetch: refetchMessage } = useGetFilterMessage(value);
+  const { refetch: refetchDepartment } =
+    useGetFilterDepartment(valueDepartment);
 
   const { control } = useForm();
   useEffect(() => {
@@ -61,7 +65,13 @@ export default function Header({
     if (page == 2 && optionsValue) {
       refetchMessage();
     }
-  }, [value]);
+    if (page == 3) {
+      refetchDepartment();
+    }
+  }, [value, valueDepartment]);
+
+  const token = localStorage.getItem("auth-token-dve");
+
   return (
     <div>
       <div className="flex justify-between items-center">
@@ -85,10 +95,10 @@ export default function Header({
                       variant="secondary"
                       options={options}
                       {...field}
-                      
-                      onChange={(event) =>
-                        {setValue({ id: event.target.value, name: value.name }), field.onChange(event.target.value)}
-                      }
+                      onChange={(event) => {
+                        setValue({ id: event.target.value, name: value.name }),
+                          field.onChange(event.target.value);
+                      }}
                     />
                   )}
                 />
@@ -102,30 +112,40 @@ export default function Header({
         </div>
         {title !== "Dashboard" && (
           <div>
-            <ButtonForm
-              text={`Criar ${subtitle.toLowerCase()}`}
-              onClick={() => setOpen(!open)}
-              startIcon={<Add />}
-              style={{ textTransform: "none" }}
-              className="bg-primary-500 text-white hover:bg-primary-500 px-6 py-2  font-medium rounded-sm text-base"
-            />
+            {page !== 4 ? (
+              <div>
+                <ButtonForm
+                  text={`Criar ${subtitle.toLowerCase()}`}
+                  onClick={() => setOpen(!open)}
+                  startIcon={<Add />}
+                  style={{ textTransform: "none" }}
+                  className="bg-primary-500 text-white hover:bg-primary-500 px-6 py-2  font-medium rounded-sm text-base"
+                />
 
-            <Modal
-              open={open}
-              onClose={() => setOpen(!open)}
-              aria-labelledby="title"
-            >
-              {page ? forms[page - 1].page : <></>}
-            </Modal>
+                <Modal
+                  open={open}
+                  onClose={() => setOpen(!open)}
+                  aria-labelledby="title"
+                >
+                  {page ? forms[page - 1].page : <></>}
+                </Modal>
+              </div>
+            ) : (
+              <a target="_blank" href={`http://localhost:3001/announcement_create?token=${token}`} className="font-poppins flex items-center bg-primary-500 text-white py-2 font-medium rounded-sm text-base px-3 pr-4"><Add className="mr-2"/> Criar anúncio</a>
+            )}
           </div>
         )}
       </div>
-      {subtitle != "Dashboard" && (
+      {subtitle == "Dashboard" || title == "Anúncios" ? null : (
         <form className="mt-10">
           <InputField
             variant="search"
             placeholder={`Busque aqui suas ${title.toLowerCase()}`}
-            onChange={(e) => setValue({ id: value.id, name: e.target.value })}
+            onChange={(e) => {
+              page === 3
+                ? setValueDepartment(e.target.value)
+                : setValue({ id: value.id, name: e.target.value });
+            }}
             InputProps={{
               endAdornment: (
                 <Search
