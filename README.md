@@ -6,7 +6,7 @@ Esse projeto funciona juntamente com outras três aplicações:
 
 - [Manager Employees API](https://github.com/ZBreno/ManagerBack)
 - [Disclosure of job offers](https://github.com/ZzZzNeto/NewDVE-Front)
-- [Disclosure of job offers AP](https://github.com/ZzZzNeto/NewDVE-Back) 
+- [Disclosure of job offers API](https://github.com/ZzZzNeto/NewDVE-Back) 
 
 
 Projeto desenvolvido na disciplina de Desenvolvimento de Projetos II, utilizando os conhecimentos adquiridos nas demais, como Administração de Banco de Dados, Processo de Software, Arquitetura de Software e Desenvolvimento de Sistemas Distribuídos.
